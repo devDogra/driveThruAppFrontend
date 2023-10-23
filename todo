@@ -1,7 +1,12 @@
-[ ] create menu page
-[ ] create home page
-[ ] create signup page 
-[ ] create login page 
-[ ] create profile page
+[x] create static menu page
+[x] create static home page
+[ ] create static signup page 
+[ ] create static login page 
+[ ] create static profile page
 [ ] set up routing between these
 [ ] extract breadcrumbs into app, dynamically populate them based on current route
+[ ] implement registration
+[ ] implement login
+    [ ] get jwt and store it in localStorage 
+    [ ] make a way to checkk from a component if user is logged in, then conditionally render items withini that component
+    [ ] after conditionally rendering profile page link to only logged in ones, in the profile page show the user's details

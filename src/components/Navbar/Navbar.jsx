@@ -15,6 +15,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 import LunchDiningIcon  from '@mui/icons-material/LunchDining';
 import Modal from '@mui/material/Modal'
 import { useState } from 'react';
+import LoginModal from '../LoginModal/LoginModal';
+import Logo from '../Logo/Logo';
 
 const pages = ['Home', 'Menu', 'About Us', 'Contact Us', 'Login',];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -61,24 +63,7 @@ function Navbar() {
     <AppBar position="fixed">
         <Container maxWidth="xl">
             <Toolbar disableGutters>
-                <LunchDiningIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                <Typography
-                variant="h6"
-                noWrap
-                component="a"
-                href="#app-bar-with-responsive-menu"
-                sx={{
-                    mr: 2,
-                    display: { xs: 'none', md: 'flex' },
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.3rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                }}
-                >
-                LOGO
-                </Typography>
+                <Logo></Logo>
 
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
@@ -185,22 +170,8 @@ function Navbar() {
             </Toolbar>
         </Container>
 
-
-        <Modal
-            open={loginModalOpen}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-            </Box>
-        </Modal>
+        <LoginModal style={style} handleClose={handleClose} loginModalOpen={loginModalOpen}></LoginModal>
+  
     </AppBar>
 
     

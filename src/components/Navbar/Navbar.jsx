@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import LunchDiningIcon  from '@mui/icons-material/LunchDining';
 
-const pages = ['Menu', 'About Us', 'Contact Us'];
+const pages = ['Home', 'Menu', 'About Us', 'Contact Us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
@@ -121,6 +121,7 @@ function Navbar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
+                hello
                 {page}
               </Button>
             ))}

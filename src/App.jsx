@@ -21,8 +21,8 @@ function App() {
       {
         hideNavBar || <Navbar></Navbar>
       }
-      {/* <MenuPage /> */}
       <Container sx={{py:10}}>
+      {/* <MenuPage /> */}
         <HomePage />
       </Container>
     </>

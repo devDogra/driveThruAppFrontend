@@ -1,7 +1,7 @@
 [x] create static menu page
 [x] create static home page
 [ ] create static signup page 
-[ ] create static login page 
+[ ] create static login page  (modal)
 [ ] create static profile page
 [ ] set up routing between these
 [ ] extract breadcrumbs into app, dynamically populate them based on current route

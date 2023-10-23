@@ -10,7 +10,6 @@ export default function MenuPage() {
 
   return (
     <>
-      <Container sx={{py:10}}>
 
       <Breadcrumbs aria-label="breadcrumb" sx={{my:4}}>
         <Link underline="hover" color="inherit" href="/">
@@ -28,7 +27,6 @@ export default function MenuPage() {
               ))
             }
         </Grid>
-      </Container>
 
     </>
   )

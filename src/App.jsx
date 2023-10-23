@@ -8,6 +8,7 @@ import Grid from '@mui/material/Unstable_Grid2'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
 import MenuPage from './pages/MenuPage/MenuPage'
+import HomePage from './pages/HomePage/HomePage'
 
 function App() {
   const hideNavbarOnPages = [
@@ -20,7 +21,10 @@ function App() {
       {
         hideNavBar || <Navbar></Navbar>
       }
-      <MenuPage />
+      {/* <MenuPage /> */}
+      <Container sx={{py:10}}>
+        <HomePage />
+      </Container>
     </>
   )
 }

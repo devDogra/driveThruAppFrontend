@@ -49,11 +49,9 @@ function Navbar() {
   //   })
   // }, [])
 
-  const { isLoggedIn, loggedInuser, error: errorCheckingLogin } = useIsLoggedIn();
+  const { isLoggedIn, loggedInUser, error: errorCheckingLogin } = useIsLoggedIn();
+  console.log({isLoggedIn, loggedInUser, errorCheckingLogin}); 
 
-  useEffect(() => {
-    console.log({isLoggedIn, loggedInuser, errorCheckingLogin});
-  }, [])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -141,17 +139,24 @@ function Navbar() {
           {/* Navbar main links */}
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={page == 'Login' ? handleOpen : handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                hello
-                {page}
-              </Button>
+            {pages.map((page) => {
+              const loginButton = (
+                <Button key={page} onClick={handleOpen} sx={{ my: 2, color: 'white', display: 'block' }}>
+                  {"Login"}
+                </Button>
+              )
 
-            ))}
+              const regularButton = (
+                <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                  {page}
+                </Button>
+              )
+
+                if (isLoggedIn && page == 'Login') return null;
+                else if (!isLoggedIn && page == 'Login') return loginButton;
+                else return regularButton;
+
+            })}
           </Box>
 
 

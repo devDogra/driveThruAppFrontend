@@ -17,9 +17,11 @@ export default function checkIfLoggedIn() {
     }
 
     // We don't consider the result of not being logged in, an error
-    return api.get('/validate', config).catch(error => {
+    return api.get('/validate', config)
+    .then(response => response.data)
+    .catch(error => {
         if (error.response.data.message == 'Invalid access token') {
-            console.log(error.response.data); 
+            console.log(error.response.data);
             return Promise.resolve({
                 isLoggedIn: false,
             })

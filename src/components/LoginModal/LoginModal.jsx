@@ -9,6 +9,7 @@ import { useState, useRef } from 'react';
 import Alert from '@mui/material/Alert'
 import storeAccessTokenInLocalStorage from '../../../utils/storeAccessTokenInLocalStorage';
 import api from '../../../config/axios.config'
+import checkIfLoggedIn from '../../../utils/checkIfLoggedIn';
 
 const style = {
     position: 'absolute',
@@ -45,6 +46,13 @@ export default function LoginModal({ loginModalOpen, handleClose, setLoginModalO
 
         const accessToken = data.accessToken;
         storeAccessTokenInLocalStorage(accessToken);
+
+        checkIfLoggedIn().then(response => {
+            console.log(response);
+        }).catch(err => {
+            console.log("Catching error: "); 
+            console.log(err); 
+        })
     }
  
     function handleLogin({ phone, password }) {

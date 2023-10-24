@@ -1,3 +1,5 @@
+REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this time when you need it on the backend. 
+
 [x] create static menu page
 [x] create static home page
 [x] create static signup page 

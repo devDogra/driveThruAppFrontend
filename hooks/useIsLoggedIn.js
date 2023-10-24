@@ -8,12 +8,10 @@ export default function useIsLoggedIn() {
 
     useEffect(() => {
         checkIfLoggedIn().then(result => {
-            // console.log("RESULT: "); 
-            // console.log(result); 
             setIsLoggedIn(result.isLoggedIn);
             setLoggedInUser(result.loggedInUser || null);
         }).catch(error => setErrorCheckingLoggedIn(error));
     }, [])
 
-    return {isLoggedIn, loggedInUser, error: errorCheckingLoggedIn};
+    return {isLoggedIn, loggedInUser, setIsLoggedIn, setLoggedInUser, error: errorCheckingLoggedIn};
 }

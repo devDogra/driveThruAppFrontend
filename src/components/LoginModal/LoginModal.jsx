@@ -10,6 +10,7 @@ import Alert from '@mui/material/Alert'
 import storeAccessTokenInLocalStorage from '../../../utils/storeAccessTokenInLocalStorage';
 import api from '../../../config/axios.config'
 import checkIfLoggedIn from '../../../utils/checkIfLoggedIn';
+import useIsLoggedIn from '../../../hooks/useIsLoggedIn';
 
 const style = {
     position: 'absolute',
@@ -27,7 +28,7 @@ const style = {
 const apiURL = import.meta.env.VITE_API_URL; 
 
 
-export default function LoginModal({ loginModalOpen, handleClose, setLoginModalOpen }) {
+export default function LoginModal({ loginModalOpen, handleClose, setLoginModalOpen, onLogin }) {
     const [creatingAccount, setCreatingAccount] = useState(false);
     const formRef = useRef(null);
     const [errorFromAPI, setErrorFromAPI] = useState(null);
@@ -44,15 +45,19 @@ export default function LoginModal({ loginModalOpen, handleClose, setLoginModalO
             setLoginModalOpen(false);
         }, 1000)
 
+        
         const accessToken = data.accessToken;
         storeAccessTokenInLocalStorage(accessToken);
 
         checkIfLoggedIn().then(response => {
             console.log(response);
+            onLogin(response.isLoggedIn, response.user);
         }).catch(err => {
             console.log("Catching error: "); 
             console.log(err); 
+            onLogin(false, null);
         })
+
     }
  
     function handleLogin({ phone, password }) {
@@ -66,7 +71,7 @@ export default function LoginModal({ loginModalOpen, handleClose, setLoginModalO
             handleSuccesfulLogin(data);
         }).catch((error) => {
             if (error.name == 'AxiosError') {
-                const errorMsg = error.response.data.error; 
+                const errorMsg = error?.response?.data?.error || error.message; 
                 setErrorFromAPI(errorMsg);
             } else {
                 console.log({error}); 

@@ -20,66 +20,64 @@ import Logo from '../Logo/Logo';
 import { useEffect } from 'react';
 import checkIfLoggedIn from '../../../utils/checkIfLoggedIn';
 import useIsLoggedIn from '../../../hooks/useIsLoggedIn';
+import roles from '../../../config/roles';
 
-const pages = ['Home', 'Menu', 'About Us', 'Contact Us', 'Login',];
+
+const pages = [
+  { name: 'Home', route: '/', hideFrom: [] },
+  { name: 'Menu', route: '/', hideFrom: [] },
+  { name: 'About Us', route: '/', hideFrom: [] },
+  { name: 'Contact Us', route: '/', hideFrom: [] },
+  { name: 'Login', route: '/', hideFrom: [roles.Customer, roles.Employee, roles.Manager, roles.Admin] },
+]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+
+const logoSx = {
+  mr: 2,
+  display: { xs: 'flex', md: 'none' },
+  flexGrow: 1,
+  fontFamily: 'monospace',
+  fontWeight: 700,
+  letterSpacing: '.3rem',
+  color: 'inherit',
+  textDecoration: 'none',
+}
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  // WOULD BE GOOD to make a custom hook that returns a statevariable isLoggedIn initialised to whether a user is logged in or not, on the initial render
-  // const isLoggedIn = useIsAuthenticated()
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // useEffect(() => {
-  //   checkIfLoggedIn().then(result => {
-  //     console.log(result); 
-  //   })
-  // }, [])
-
-  const { isLoggedIn, loggedInUser, error: errorCheckingLogin } = useIsLoggedIn();
-  console.log({isLoggedIn, loggedInUser, errorCheckingLogin}); 
+  const { 
+    isLoggedIn, 
+    loggedInUser, 
+    setIsLoggedIn,
+    setLoggedInUser,
+    error: errorCheckingLogin
+  } = useIsLoggedIn();
+  console.log({ isLoggedIn, loggedInUser, errorCheckingLogin });
 
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleCloseNavMenu = () => setAnchorElNav(null);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
 
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  function handleOpen() {
-    setLoginModalOpen(true);
+
+  const handleOpen = () => setLoginModalOpen(true);
+  const handleClose = () => setLoginModalOpen(false);
+
+  function handleLogin(isLoggedIn, loggedInUser) {
+    setIsLoggedIn(isLoggedIn);
+    setLoggedInUser(loggedInUser);
   }
-  function handleClose() {
-    setLoginModalOpen(false);
-  }
+
   return (
     <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Logo></Logo>
+          <Logo/>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -111,50 +109,28 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <LunchDiningIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+          
+          {/* <Logo/> */}
           {/* Navbar main links */}
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => {
-              const loginButton = (
-                <Button key={page} onClick={handleOpen} sx={{ my: 2, color: 'white', display: 'block' }}>
-                  {"Login"}
+              if (page.hideFrom.includes(loggedInUser?.role)) return null;
+
+              const buttonOnClick = (page.name == 'Login') ? handleOpen : handleCloseNavMenu;
+              
+              return (
+                <Button key={page.name} onClick={buttonOnClick} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    { page.name }
                 </Button>
               )
-
-              const regularButton = (
-                <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                  {page}
-                </Button>
-              )
-
-                if (isLoggedIn && page == 'Login') return null;
-                else if (!isLoggedIn && page == 'Login') return loginButton;
-                else return regularButton;
 
             })}
           </Box>
@@ -193,7 +169,7 @@ function Navbar() {
         </Toolbar>
       </Container>
 
-      <LoginModal handleClose={handleClose} loginModalOpen={loginModalOpen} setLoginModalOpen={setLoginModalOpen}></LoginModal>
+      <LoginModal handleClose={handleClose} loginModalOpen={loginModalOpen} setLoginModalOpen={setLoginModalOpen} onLogin={handleLogin}></LoginModal>
 
     </AppBar>
 

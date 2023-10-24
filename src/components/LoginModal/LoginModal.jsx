@@ -4,9 +4,11 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField'
-import axios from 'axios';
+// import axios from 'axios';
 import { useState, useRef } from 'react';
 import Alert from '@mui/material/Alert'
+import storeAccessTokenInLocalStorage from '../../../utils/storeAccessTokenInLocalStorage';
+import api from '../../../config/axios.config'
 
 const style = {
     position: 'absolute',
@@ -34,25 +36,34 @@ export default function LoginModal({ loginModalOpen, handleClose, setLoginModalO
         setCreatingAccount(!creatingAccount);
         resetForm();
     }
-    function handleSuccesfulLogin() {
+    function handleSuccesfulLogin(data) {
         resetForm();
         setShowSuccessMsg(true);
         setTimeout(() => {
             setLoginModalOpen(false);
         }, 1000)
+
+        const accessToken = data.accessToken;
+        storeAccessTokenInLocalStorage(accessToken);
     }
+ 
     function handleLogin({ phone, password }) {
         console.log("handleLogin"); 
         console.log(apiURL); 
 
-        axios.post(`${apiURL}/login`, { phone, password }).then(response => {
+        api.post(`/login`, { phone, password }).then(response => {
             console.log(response); 
+            const data = response.data; 
             console.log("Successful login"); 
-            handleSuccesfulLogin();
-        }).catch(({response}) => {
-            const error = response.data.error;
-            console.log(error); 
-            setErrorFromAPI(error);
+            handleSuccesfulLogin(data);
+        }).catch((error) => {
+            if (error.name == 'AxiosError') {
+                const errorMsg = error.response.data.error; 
+                setErrorFromAPI(errorMsg);
+            } else {
+                console.log({error}); 
+                window.alert("An error occurred. Please reload"); 
+            }
         })
     }
     function resetForm() {

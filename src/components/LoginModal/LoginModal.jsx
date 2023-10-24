@@ -4,7 +4,9 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField'
-import { useState } from 'react';
+import axios from 'axios';
+import { useState, useRef } from 'react';
+import Alert from '@mui/material/Alert'
 
 const style = {
     position: 'absolute',
@@ -19,54 +21,132 @@ const style = {
 
 };
 
-export default function LoginModal({ loginModalOpen, handleClose }) {
-    const [creatingAccount, setCreatingAccount] = useState(false);
+const apiURL = import.meta.env.VITE_API_URL; 
 
+
+export default function LoginModal({ loginModalOpen, handleClose, setLoginModalOpen }) {
+    const [creatingAccount, setCreatingAccount] = useState(false);
+    const formRef = useRef(null);
+    const [errorFromAPI, setErrorFromAPI] = useState(null);
+    const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+
+    function toggleForms() {
+        setCreatingAccount(!creatingAccount);
+        resetForm();
+    }
+    function handleSuccesfulLogin() {
+        resetForm();
+        setShowSuccessMsg(true);
+        setTimeout(() => {
+            setLoginModalOpen(false);
+        }, 1000)
+    }
+    function handleLogin({ phone, password }) {
+        console.log("handleLogin"); 
+        console.log(apiURL); 
+
+        axios.post(`${apiURL}/login`, { phone, password }).then(response => {
+            console.log(response); 
+            console.log("Successful login"); 
+            handleSuccesfulLogin();
+        }).catch(({response}) => {
+            const error = response.data.error;
+            console.log(error); 
+            setErrorFromAPI(error);
+        })
+    }
+    function resetForm() {
+        const form = formRef.current; 
+        form.reset();
+        setErrorFromAPI(null); 
+        setShowSuccessMsg(false);
+    }
+    function handleRegister() {
+        console.log("handleRegister");
+    }
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = (Object.fromEntries(formData));
+
+        if (creatingAccount) {
+            handleRegister(data);
+        } else {
+            handleLogin(data);
+        }
+    }
+    
 
     return (
-        <Modal
-            open={loginModalOpen}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h4" mb={5}>{
-                    creatingAccount ? 'Create Account' : 'Login'
-                }</Typography>
+        <>
+            <Modal
+                open={loginModalOpen}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >{
+                showSuccessMsg ? 
+                    (
+                        <Box sx={style}>
+                            <Alert severity="success">Login Successful</Alert>
+                        </Box>
+                    ) : 
+                    (
+                        <Box sx={style}>
+                        {/* Form Heading */}
+                        <Typography id="modal-modal-title" variant="h4" mb={5}>{
+                            creatingAccount ? 'Create Account' : 'Login'
+                        }</Typography>
 
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 2
-                }}
-                    component="form">
+                        {/* Form */}
+                        <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 2
+                            }}
+                            component="form"
+                            onSubmit={handleFormSubmit}
+                            ref={formRef}
+                        >
 
-                    <TextField id="outlined-basic" required inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} label="Phone" variant="outlined" />
-                    {
-                        creatingAccount && <>
-                        <TextField id="outlined-basic" required label="First name" variant="outlined" />
-                        <TextField id="outlined-basic" label="Last name" variant="outlined" />
-                        <TextField id="outlined-basic" label="Email" variant="outlined" />
-                        </>
-                    }
-                    <TextField required id="outlined-basic" label="Password" variant="outlined" type="password"/>
-                    {
-                        creatingAccount &&  <TextField required id="outlined-basic" label="Confirm password" variant="outlined" type="password"/>
+                            <TextField id="outlined-basic" required inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} label="Phone" variant="outlined" name="phone" />
+                            {
+                                creatingAccount && <>
+                                <TextField id="outlined-basic" required label="First name" variant="outlined" name="firstName"/>
+                                <TextField id="outlined-basic" label="Last name" variant="outlined" name="lastName"/>
+                                <TextField id="outlined-basic" label="Email" variant="outlined" name="email"/>
+                                </>
+                            }
+                            <TextField required id="outlined-basic" label="Password" variant="outlined" type="password" name="password"/>
+                            {
+                                creatingAccount &&  <TextField required id="outlined-basic" label="Confirm password" variant="outlined" type="password" name="confirmPassword"/>
 
-                    }
+                            }
+
+                            {/* Form Validation Errors from API */}
+                            {
+                                errorFromAPI && (
+                                    <Box>
+                                        <Alert severity="error">{errorFromAPI}</Alert>
+                                    </Box>
+                                )
+
+                            }
 
 
+                            <Box sx={{ display: 'flex', mt: 3, justifyContent: 'space-around' }}>
+                                <Button variant='contained' type='submit'>{
+                                    creatingAccount ? 'Create' : 'Login'
+                                }</Button>
+                                <Button variant='outline' onClick={toggleForms}>{ creatingAccount ? 'Log in' : 'Create an account' }</Button>
+                            </Box>
+                        </Box>
+                        </Box>
+                    )
+                }
+            </Modal>
+   
+        </>
 
-                    <Box sx={{ display: 'flex', mt: 3, justifyContent: 'space-around' }}>
-                        <Button variant='contained'>{
-                            creatingAccount ? 'Create' : 'Login'
-                        }</Button>
-                        <Button variant='outline' onClick={() => setCreatingAccount(!creatingAccount)}>{ creatingAccount ? 'Log in' : 'Create an account' }</Button>
-                    </Box>
-                </Box>
-            </Box>
-
-        </Modal>
     )
 }

@@ -170,7 +170,7 @@ function Navbar() {
             </Toolbar>
         </Container>
 
-        <LoginModal handleClose={handleClose} loginModalOpen={loginModalOpen}></LoginModal>
+        <LoginModal handleClose={handleClose} loginModalOpen={loginModalOpen} setLoginModalOpen={setLoginModalOpen}></LoginModal>
   
     </AppBar>
 

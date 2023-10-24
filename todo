@@ -1,7 +1,7 @@
 [x] create static menu page
 [x] create static home page
-[ ] create static signup page 
-[ ] create static login page  (modal)
+[x] create static signup page 
+[x] create static login page  (modal)
 [ ] create static profile page
 [ ] set up routing between these
 [ ] extract breadcrumbs into app, dynamically populate them based on current route
@@ -9,4 +9,10 @@
 [ ] implement login
     [ ] get jwt and store it in localStorage 
     [ ] make a way to checkk from a component if user is logged in, then conditionally render items withini that component
+        [ ] if a user has a jwt, and it is not expired, consider him logged in
+        [ ] if no jwt, logged out
+            [ ] if jwt but invalid, alert and log out
+            - how will we find out if invalid? we wont; we'll access protected API routes, and if the authentication fails the server will inform us via response and we can take appropriate action
+            [ ] create a /validate route to check if user is logged in or not, if he is in response we get the logged in user. this is the only ACTUAL way to know if logged in or not, otherwise if we assume having jwt == logged in, we'd just have to be optimistic and deal with any errors WHEN the server responds with an error
+            [ ] on loading a page,, req to the validate route to check if a user is logged in or not, so we know what to display OR whether to redirect or not
     [ ] after conditionally rendering profile page link to only logged in ones, in the profile page show the user's details

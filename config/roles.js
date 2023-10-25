@@ -1,5 +1,5 @@
 const roles = {
-    Anonymous: null,
+    Anonymous: undefined,
     Customer: 'Customer',
     Employee: 'Employee',
     Manager: 'Manager',

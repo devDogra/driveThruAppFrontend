@@ -31,6 +31,7 @@ const pages = [
   { name: 'About Us', route: '/', hideFrom: [] },
   { name: 'Contact Us', route: '/', hideFrom: [] },
   { name: 'Login', route: '/', hideFrom: [roles.Customer, roles.Employee, roles.Manager, roles.Admin] },
+  { name: 'Profile', route: '/profile', hideFrom: [roles.Anonymous]}
 ]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -125,6 +126,8 @@ function Navbar() {
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => {
+              console.log(loggedInUser?.role);
+              console.log(page.hideFrom); 
               if (page.hideFrom.includes(loggedInUser?.role)) return null;
 
               const buttonOnClick = (page.name == 'Login') ? handleOpen : handleCloseNavMenu;

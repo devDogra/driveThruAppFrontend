@@ -4,17 +4,17 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
 [x] create static home page
 [x] create static signup page 
 [x] create static login page  (modal)
-[ ] create static profile page
-[ ] lift useLoggedIN state up to the App component. it doesnt make sense for it to be the state of the navbar, or anything else. + it's required by every page!!! will have to use redux store or contextapi to make this state available to every child comp of App (child == page)
+[x] create static profile page
+[x] lift useLoggedIN state up to the App component. it doesnt make sense for it to be the state of the navbar, or anything else. + it's required by every page!!! will have to use redux store or contextapi to make this state available to every child comp of App (child == page)
 [ ] set up routing between these
 [ ] extract breadcrumbs into app, dynamically populate them based on current route
 [ ] implement registration
 [ ] implement login
     [x] get jwt and store it in localStorage 
-    [ ] make a way to checkk from a component if user is logged in, then conditionally render items withini that component
-        [ ] make a custom hook which at the initial render of each page will check (query the server) whether the user is logged in, and then store that value in a state variable so we can decide whether to redirect or show certain stuff or not. use the API's /validate endpoint for this
-        [ ] if a user has a jwt, and it is not expired, consider him logged in
-        [ ] if no jwt, logged out
+    [x] make a way to checkk from a component if user is logged in, then conditionally render items withini that component
+        [x] make a custom hook which at the initial render of each page will check (query the server) whether the user is logged in, and then store that value in a state variable so we can decide whether to redirect or show certain stuff or not. use the API's /validate endpoint for this
+        [x] if a user has a jwt, and it is not expired, consider him logged in
+        [x] if no jwt, logged out
             [ ] if jwt but invalid, alert and log out
             - how will we find out if invalid? we wont; we'll access protected API routes, and if the authentication fails the server will inform us via response and we can take appropriate action
             [x] create a /validate route to check if user is logged in or not, if he is in response we get the logged in user. this is the only ACTUAL way to know if logged in or not, otherwise if we assume having jwt == logged in, we'd just have to be optimistic and deal with any errors WHEN the server responds with an error

@@ -13,5 +13,5 @@ export default function useIsLoggedIn() {
         }).catch(error => setErrorCheckingLoggedIn(error));
     }, [])
 
-    return {isLoggedIn, loggedInUser, setIsLoggedIn, setLoggedInUser, error: errorCheckingLoggedIn};
+    return {isLoggedIn, loggedInUser, setIsLoggedIn, setLoggedInUser, errorCheckingLoggedIn};
 }

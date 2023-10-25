@@ -5,6 +5,7 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
 [x] create static signup page 
 [x] create static login page  (modal)
 [ ] create static profile page
+[ ] lift useLoggedIN state up to the App component. it doesnt make sense for it to be the state of the navbar, or anything else. + it's required by every page!!! will have to use redux store or contextapi to make this state available to every child comp of App (child == page)
 [ ] set up routing between these
 [ ] extract breadcrumbs into app, dynamically populate them based on current route
 [ ] implement registration

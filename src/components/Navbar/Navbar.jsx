@@ -21,6 +21,8 @@ import { useEffect } from 'react';
 import checkIfLoggedIn from '../../../utils/checkIfLoggedIn';
 import useIsLoggedIn from '../../../hooks/useIsLoggedIn';
 import roles from '../../../config/roles';
+import { useContext } from 'react';
+import { LoggedInUserContext } from '../../contexts/loggedInUserContext';
 
 
 const pages = [
@@ -48,13 +50,14 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const { 
-    isLoggedIn, 
-    loggedInUser, 
+  const {
+    isLoggedIn,
+    loggedInUser,
     setIsLoggedIn,
     setLoggedInUser,
-    error: errorCheckingLogin
-  } = useIsLoggedIn();
+    errorCheckingLogin
+  } = useContext(LoggedInUserContext);
+
   console.log({ isLoggedIn, loggedInUser, errorCheckingLogin });
 
 
@@ -77,7 +80,7 @@ function Navbar() {
     <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Logo/>
+          <Logo />
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -116,7 +119,7 @@ function Navbar() {
             </Menu>
           </Box>
           <LunchDiningIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          
+
           {/* <Logo/> */}
           {/* Navbar main links */}
 
@@ -125,10 +128,10 @@ function Navbar() {
               if (page.hideFrom.includes(loggedInUser?.role)) return null;
 
               const buttonOnClick = (page.name == 'Login') ? handleOpen : handleCloseNavMenu;
-              
+
               return (
                 <Button key={page.name} onClick={buttonOnClick} sx={{ my: 2, color: 'white', display: 'block' }}>
-                    { page.name }
+                  {page.name}
                 </Button>
               )
 

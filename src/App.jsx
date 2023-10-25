@@ -9,23 +9,46 @@ import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
 import MenuPage from './pages/MenuPage/MenuPage'
 import HomePage from './pages/HomePage/HomePage'
+// This hook gets the INITIAL LOGGED-IN INFO. Keyword => INITIAL, i.e info when the app renders on whether the user is logged in or not
+import useIsLoggedIn from '../hooks/useIsLoggedIn'
+import { LoggedInUserContext } from './contexts/loggedInUserContext'
+
+const hideNavbarOnPages = [
+  '/login',
+  '/register',
+]
 
 function App() {
-  const hideNavbarOnPages = [
-    '/login',
-    '/register',
-  ]
-  const hideNavBar = false; 
+
+  const {
+    isLoggedIn,
+    loggedInUser,
+    setIsLoggedIn,
+    setLoggedInUser,
+    errorCheckingLogin
+  } = useIsLoggedIn();
+
+  const hideNavBar = false;
   return (
     <>
-      {
-        hideNavBar || <Navbar></Navbar>
-      }
-      <Container sx={{py:10}}>
-      {/* <MenuPage /> */}
-        <HomePage />
-      </Container>
+      <LoggedInUserContext.Provider value={{
+        isLoggedIn,
+        loggedInUser,
+        setIsLoggedIn,
+        setLoggedInUser,
+        errorCheckingLogin
+      }}>
+
+        { hideNavBar || <Navbar></Navbar> }
+
+        <Container sx={{ py: 10 }}>
+          {/* <MenuPage /> */}
+          <HomePage />
+        </Container>
+
+      </LoggedInUserContext.Provider>
     </>
+
   )
 }
 

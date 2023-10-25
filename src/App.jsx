@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage/HomePage'
 // This hook gets the INITIAL LOGGED-IN INFO. Keyword => INITIAL, i.e info when the app renders on whether the user is logged in or not
 import useIsLoggedIn from '../hooks/useIsLoggedIn'
 import { LoggedInUserContext } from './contexts/loggedInUserContext'
+import ProfilePage from './pages/ProfilePage/Profile'
 
 const hideNavbarOnPages = [
   '/login',
@@ -43,7 +44,8 @@ function App() {
 
         <Container sx={{ py: 10 }}>
           {/* <MenuPage /> */}
-          <HomePage />
+          {/* <HomePage /> */}
+          <ProfilePage/>
         </Container>
 
       </LoggedInUserContext.Provider>

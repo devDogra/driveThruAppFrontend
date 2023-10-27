@@ -12,6 +12,7 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import BadgeIcon from '@mui/icons-material/Badge';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Paper from '@mui/material/Paper'
+import YourOrderTable from "../../components/YourOrderTable/YourOrderTable";
 
 export default function ProfilePage() {
   const {
@@ -42,6 +43,7 @@ export default function ProfilePage() {
 
 
       <Box sx={{display:'flex', gap:"2rem"}}>
+        <Box>
         <Paper sx={{display: 'flex', gap: "1rem", p: 4, flexShrink:1 }} profile-card>
 
           <AccountBoxIcon sx={{ fontSize: "6rem", alignSelf:'center' }}></AccountBoxIcon>
@@ -67,11 +69,13 @@ export default function ProfilePage() {
 
 
         </Paper>
+          </Box>
 
-        <Box your-order sx={{ bgcolor: 'red', flexGrow:1, p:2 }}>
-          <Typography variant="h5" textTransform="uppercase" fontWeight="bold">
+        <Box your-order sx={{ flexGrow:1, p:2, bgcolor:'red' }}>
+          <Typography variant="h5" textTransform="uppercase" fontWeight="bold" mb={3}>
             Your Order
           </Typography>
+          <YourOrderTable></YourOrderTable>
         </Box>
       </Box>
 

@@ -13,6 +13,7 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Paper from '@mui/material/Paper'
 import YourOrderTable from "../../components/YourOrderTable/YourOrderTable";
+import PreviousOrdersTable from "../../components/PreviousOrdersTable/PreviousOrdersTable";
 
 export default function ProfilePage() {
   const {
@@ -71,7 +72,7 @@ export default function ProfilePage() {
         </Paper>
           </Box>
 
-        <Box your-order sx={{ flexGrow:1, p:2, bgcolor:'red' }}>
+        <Box your-order sx={{ flexGrow:1, p:2  }}>
           <Typography variant="h5" textTransform="uppercase" fontWeight="bold" mb={3}>
             Your Order
           </Typography>
@@ -81,7 +82,15 @@ export default function ProfilePage() {
 
       <Button variant="contained" size="large" endIcon={<ArrowRightAltIcon />}>Go to Menu </Button>
 
-      <Divider sx={{ borderBottomWidth: 1 }}></Divider>
+      <Divider sx={{ borderBottomWidth: 1, my: 3 }}></Divider>
+
+      <Box prev-orders sx={{ flexGrow:1, p:2, mt:2  }}>
+          <Typography variant="h5" textTransform="uppercase" fontWeight="bold" mb={3}>
+            Previous Orders
+          </Typography>
+          {/* <YourOrderTable></YourOrderTable> */}
+          <PreviousOrdersTable></PreviousOrdersTable>
+        </Box>
     </>
   )
 

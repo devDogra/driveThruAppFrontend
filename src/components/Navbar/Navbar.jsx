@@ -132,9 +132,9 @@ function Navbar() {
               if (page.hideFrom.includes(loggedInUser?.role)) return null;
 
               const buttonOnClick = (page.name == 'Login') ? handleOpen : handleCloseNavMenu;
-
+              const marginLeft = ['Login', 'Profile'].includes(page.name) ? 'auto' : null;  
               return (
-                <Button component={page.route && ReactRouterLink} to={page.route} key={page.name} onClick={buttonOnClick} sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Button component={page.route && ReactRouterLink} to={page.route} key={page.name} onClick={buttonOnClick} sx={{ my: 2, color: 'white', display: 'block', marginLeft }}>
                   {page.name}
                 </Button>
               )
@@ -144,7 +144,7 @@ function Navbar() {
 
 
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -172,7 +172,7 @@ function Navbar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
 

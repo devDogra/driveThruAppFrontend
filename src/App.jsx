@@ -13,6 +13,7 @@ import HomePage from './pages/HomePage/HomePage'
 import useIsLoggedIn from '../hooks/useIsLoggedIn'
 import { LoggedInUserContext } from './contexts/loggedInUserContext'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
+import { Routes, Route } from 'react-router-dom'
 
 const hideNavbarOnPages = [
   '/login',
@@ -44,8 +45,14 @@ function App() {
 
         <Container sx={{ py: 10 }}>
           {/* <MenuPage /> */}
+
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/menu" element={<MenuPage />} />
+          </Routes>
           {/* <HomePage /> */}
-          <ProfilePage/>
+          {/* <ProfilePage/> */}
         </Container>
 
       </LoggedInUserContext.Provider>

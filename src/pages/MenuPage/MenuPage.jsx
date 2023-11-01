@@ -5,6 +5,7 @@ import MenuItemCard from '../../components/MenuItemCard/MenuItemCard'
 import Grid from '@mui/material/Unstable_Grid2'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
+import { nanoid } from 'nanoid'
 
 export default function MenuPage() {
 

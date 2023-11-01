@@ -23,14 +23,15 @@ import useIsLoggedIn from '../../../hooks/useIsLoggedIn';
 import roles from '../../../config/roles';
 import { useContext } from 'react';
 import { LoggedInUserContext } from '../../contexts/loggedInUserContext';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 
 const pages = [
   { name: 'Home', route: '/', hideFrom: [] },
-  { name: 'Menu', route: '/', hideFrom: [] },
-  { name: 'About Us', route: '/', hideFrom: [] },
-  { name: 'Contact Us', route: '/', hideFrom: [] },
-  { name: 'Login', route: '/', hideFrom: [roles.Customer, roles.Employee, roles.Manager, roles.Admin] },
+  { name: 'Menu', route: '/menu', hideFrom: [] },
+  { name: 'About Us', route: '/about', hideFrom: [] },
+  { name: 'Contact Us', route: '/contact', hideFrom: [] },
+  { name: 'Login', route: null, hideFrom: [roles.Customer, roles.Employee, roles.Manager, roles.Admin] },
   { name: 'Profile', route: '/profile', hideFrom: [roles.Anonymous]}
 ]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -133,7 +134,7 @@ function Navbar() {
               const buttonOnClick = (page.name == 'Login') ? handleOpen : handleCloseNavMenu;
 
               return (
-                <Button key={page.name} onClick={buttonOnClick} sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Button component={page.route && ReactRouterLink} to={page.route} key={page.name} onClick={buttonOnClick} sx={{ my: 2, color: 'white', display: 'block' }}>
                   {page.name}
                 </Button>
               )

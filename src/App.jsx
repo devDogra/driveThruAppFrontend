@@ -14,6 +14,7 @@ import useIsLoggedIn from '../hooks/useIsLoggedIn'
 import { LoggedInUserContext } from './contexts/loggedInUserContext'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { Routes, Route } from 'react-router-dom'
+import DynamicBreadcrumbs from './components/DynamicBreadcrumbs/DynamicBreadcrumbs'
 
 const hideNavbarOnPages = [
   '/login',
@@ -41,10 +42,14 @@ function App() {
         errorCheckingLogin
       }}>
 
-        { hideNavBar || <Navbar></Navbar> }
+        {hideNavBar || (
+            <Navbar></Navbar>
+        )}
 
         <Container sx={{ py: 10 }}>
           {/* <MenuPage /> */}
+          { hideNavBar || <DynamicBreadcrumbs/>}
+
 
           <Routes>
             <Route path="/" element={<HomePage />} />

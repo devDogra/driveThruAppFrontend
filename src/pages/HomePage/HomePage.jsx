@@ -21,12 +21,12 @@ export default function HomePage() {
 
   return (
     <>
-        <Breadcrumbs aria-label="breadcrumb" sx={{my:4}}>
+        {/* <Breadcrumbs aria-label="breadcrumb" sx={{my:4}}>
             <Link underline="hover" color="inherit" href="/">
             BurgerXYZ
             </Link>
             <Typography color="text.primary" fontWeight={"bold"} fontSize={"150%"}>Home</Typography>
-        </Breadcrumbs>
+        </Breadcrumbs> */}
 
     
 

@@ -12,12 +12,12 @@ export default function MenuPage() {
   return (
     <>
 
-      <Breadcrumbs aria-label="breadcrumb" sx={{my:4}}>
+      {/* <Breadcrumbs aria-label="breadcrumb" sx={{my:4}}>
         <Link underline="hover" color="inherit" href="/">
           BurgerXYZ
         </Link>
         <Typography color="text.primary" fontWeight={"bold"} fontSize={"150%"}>Menu</Typography>
-      </Breadcrumbs>
+      </Breadcrumbs> */}
 
         <Grid container spacing={6}>
             {

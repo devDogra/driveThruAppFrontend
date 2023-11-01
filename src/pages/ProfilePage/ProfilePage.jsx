@@ -14,6 +14,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Paper from '@mui/material/Paper'
 import YourOrderTable from "../../components/YourOrderTable/YourOrderTable";
 import PreviousOrdersTable from "../../components/PreviousOrdersTable/PreviousOrdersTable";
+import { useLocation } from "react-router-dom";
 
 export default function ProfilePage() {
   const {
@@ -23,6 +24,7 @@ export default function ProfilePage() {
     setLoggedInUser,
     errorCheckingLogin
   } = useContext(LoggedInUserContext);
+
 
 
   return (
@@ -35,12 +37,12 @@ export default function ProfilePage() {
         }
       </Typography>
 
-      <Breadcrumbs aria-label="breadcrumb" sx={{ my: 4 }}>
+      {/* <Breadcrumbs aria-label="breadcrumb" sx={{ my: 4 }}>
         <Link underline="hover" color="inherit" href="/">
           BurgerXYZ
         </Link>
         <Typography color="text.primary" fontWeight={"bold"} fontSize={"150%"}>Profile</Typography>
-      </Breadcrumbs>
+      </Breadcrumbs> */}
 
       <Box sx={{ display: 'flex', gap: "2rem" }}>
         <Box>

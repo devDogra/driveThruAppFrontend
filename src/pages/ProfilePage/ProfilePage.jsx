@@ -42,37 +42,37 @@ export default function ProfilePage() {
         <Typography color="text.primary" fontWeight={"bold"} fontSize={"150%"}>Profile</Typography>
       </Breadcrumbs>
 
-
-      <Box sx={{display:'flex', gap:"2rem"}}>
+      <Box sx={{ display: 'flex', gap: "2rem" }}>
         <Box>
-        <Paper sx={{display: 'flex', gap: "1rem", p: 4, flexShrink:1 }} profile-card>
+          <Paper sx={{ display: 'flex', gap: "1rem", p: 4, flexShrink: 1, py: 6, borderRadius:4 }} profile-card>
 
-          <AccountBoxIcon sx={{ fontSize: "6rem", alignSelf:'center' }}></AccountBoxIcon>
-          <Box>
-            <Typography variant='h6' textTransform='uppercase' mb={1} fontWeight='bold'>
-              {loggedInUser?.firstName}
-            </Typography>
-
-            <Box sx={{ display: 'flex', mt: 1, gap: 2 }}>
-              <PhoneAndroidIcon></PhoneAndroidIcon>
-              <Typography variant='p' fontWeight='bold' >
-                {loggedInUser?.phone}
+            <AccountBoxIcon sx={{ fontSize: "6rem", alignSelf: 'center' }}></AccountBoxIcon>
+            <Box>
+              <Typography variant='h6' textTransform='uppercase' mb={1} fontWeight='bold'>
+                {loggedInUser?.firstName}
               </Typography>
+
+              <Box sx={{ display: 'flex', mt: 1, gap: 2 }}>
+                <PhoneAndroidIcon></PhoneAndroidIcon>
+                <Typography variant='p' fontWeight='bold' >
+                  {loggedInUser?.phone}
+                </Typography>
+              </Box>
+
+              <Box sx={{ display: 'flex', mt: 1, gap: 2 }}>
+                <BadgeIcon></BadgeIcon>
+                <Typography variant='p' fontWeight='bold' >
+                  {loggedInUser?.role}
+                </Typography>
+              </Box>
             </Box>
 
-            <Box sx={{ display: 'flex', mt: 1, gap: 2 }}>
-              <BadgeIcon></BadgeIcon>
-              <Typography variant='p' fontWeight='bold' >
-                {loggedInUser?.role}
-              </Typography>
-            </Box>
-          </Box>
 
+          </Paper>
+          <Button variant="contained" size="large" endIcon={<ArrowRightAltIcon />} sx={{ my: 4, width: "100%"}}>Go to Menu </Button>
+        </Box>
 
-        </Paper>
-          </Box>
-
-        <Box your-order sx={{ flexGrow:1, p:2  }}>
+        <Box your-order sx={{ flexGrow: 1, p: 2 }}>
           <Typography variant="h5" textTransform="uppercase" fontWeight="bold" mb={3}>
             Your Order
           </Typography>
@@ -80,17 +80,15 @@ export default function ProfilePage() {
         </Box>
       </Box>
 
-      <Button variant="contained" size="large" endIcon={<ArrowRightAltIcon />}>Go to Menu </Button>
-
       <Divider sx={{ borderBottomWidth: 1, my: 3 }}></Divider>
 
-      <Box prev-orders sx={{ flexGrow:1, p:2, mt:2  }}>
-          <Typography variant="h5" textTransform="uppercase" fontWeight="bold" mb={3}>
-            Previous Orders
-          </Typography>
-          {/* <YourOrderTable></YourOrderTable> */}
-          <PreviousOrdersTable></PreviousOrdersTable>
-        </Box>
+      <Box prev-orders sx={{ flexGrow: 1, p: 2, mt: 2 }}>
+        <Typography variant="h5" textTransform="uppercase" fontWeight="bold" mb={3}>
+          Previous Orders
+        </Typography>
+        {/* <YourOrderTable></YourOrderTable> */}
+        <PreviousOrdersTable></PreviousOrdersTable>
+      </Box>
     </>
   )
 

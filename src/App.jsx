@@ -12,9 +12,11 @@ import HomePage from './pages/HomePage/HomePage'
 // This hook gets the INITIAL LOGGED-IN INFO. Keyword => INITIAL, i.e info when the app renders on whether the user is logged in or not
 import useIsLoggedIn from '../hooks/useIsLoggedIn'
 import { LoggedInUserContext } from './contexts/loggedInUserContext'
+import { MenuItemsContext } from './contexts/menuItemsContext'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { Routes, Route } from 'react-router-dom'
 import DynamicBreadcrumbs from './components/DynamicBreadcrumbs/DynamicBreadcrumbs'
+import useFetchApi from '../hooks/useFetchApi'
 
 const hideNavbarOnPages = [
   '/login',
@@ -31,6 +33,9 @@ function App() {
     errorCheckingLogin
   } = useIsLoggedIn();
 
+
+  const { error, data } = useFetchApi('/menuItems', { allMenuItems: [] });
+
   const hideNavBar = false;
   return (
     <>
@@ -41,25 +46,30 @@ function App() {
         setLoggedInUser,
         errorCheckingLogin
       }}>
+        <MenuItemsContext.Provider value={{
+          allMenuItems: data?.allMenuItems,
+        }}>
 
-        {hideNavBar || (
+          {hideNavBar || (
             <Navbar></Navbar>
-        )}
+          )}
 
-        <Container sx={{ py: 10 }}>
-          {/* <MenuPage /> */}
-          { hideNavBar || <DynamicBreadcrumbs/>}
+          <Container sx={{ py: 10 }}>
+            {/* <MenuPage /> */}
+            {hideNavBar || <DynamicBreadcrumbs />}
 
 
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/menu" element={<MenuPage />} />
-          </Routes>
-          {/* <HomePage /> */}
-          {/* <ProfilePage/> */}
-        </Container>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/menu" element={<MenuPage />} />
+            </Routes>
+            {/* <HomePage /> */}
+            {/* <ProfilePage/> */}
+          </Container>
 
+          
+        </MenuItemsContext.Provider>
       </LoggedInUserContext.Provider>
     </>
 

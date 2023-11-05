@@ -14,10 +14,17 @@ import Map from '../../components/Map/Map'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
+import { useContext } from 'react'
+import { MenuItemsContext } from '../../contexts/menuItemsContext'
+import { MenuItem } from '@mui/material'
 
 
 export default function HomePage() {
     const mapURL_GOOGLE = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3497.9984429399815!2d77.1175630203607!3d28.749463447111697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1698052251851!5m2!1sen!2sin"
+
+    const { allMenuItems } = useContext(MenuItemsContext);
+    console.log("from homepage.jsx"); 
+    console.log(allMenuItems); 
 
   return (
     <>
@@ -36,10 +43,15 @@ export default function HomePage() {
             </Typography>
 
             <Stack spacing={6} sx={{ my: 4, mb: 6}} direction="row" useFlexGap>
+                {/* <MenuItemCard/>
                 <MenuItemCard/>
                 <MenuItemCard/>
-                <MenuItemCard/>
-                <MenuItemCard/>
+                <MenuItemCard/> */}
+                {
+                    allMenuItems.map(item => (
+                        <MenuItemCard key={item.id} item={item}></MenuItemCard>
+                    ))
+                }
             </Stack>
 
             <Button variant="contained" size="large" endIcon={<ArrowRightAltIcon/>}>Go to Menu </Button>

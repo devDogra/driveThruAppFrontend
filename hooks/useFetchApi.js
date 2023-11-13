@@ -8,8 +8,8 @@ export default function useFetchApi(url, defaultValue) {
     useEffect(() => {
         api.get(url).then(result => {
             setData(result.data);
-            console.log("Fetched data: "); 
-            console.log(data); 
+            // console.log("Fetched data: "); 
+            // console.log(data); 
         }).catch(err => setError(err));
     }, [])
 

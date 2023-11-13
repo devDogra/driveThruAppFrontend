@@ -24,6 +24,14 @@ export default function ProfilePage() {
     setLoggedInUser,
     errorCheckingLogin
   } = useContext(LoggedInUserContext);
+  console.log("profile pg login info: ");
+  console.log({
+    isLoggedIn,
+    loggedInUser,
+    setIsLoggedIn,
+    setLoggedInUser,
+    errorCheckingLogin
+  }); 
 
 
 

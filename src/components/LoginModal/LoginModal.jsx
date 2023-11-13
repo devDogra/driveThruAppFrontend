@@ -50,7 +50,7 @@ export default function LoginModal({ loginModalOpen, handleClose, setLoginModalO
         storeAccessTokenInLocalStorage(accessToken);
 
         checkIfLoggedIn().then(response => {
-            console.log(response);
+            // console.log(response);
             onLogin(response.isLoggedIn, response.user);
         }).catch(err => {
             console.log("Catching error: "); 

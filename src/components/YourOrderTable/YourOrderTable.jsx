@@ -28,13 +28,6 @@ const rows = [
   getOrderItem('Burger', 200, 2),
   getOrderItem('Coke (Large)', 70, 2),
   getOrderItem('Fries', 120, 1),
-  getOrderItem('Fries', 120, 1),
-  getOrderItem('Fries', 120, 1),
-  getOrderItem('Fries', 120, 1),
-  getOrderItem('Fries', 120, 1),
-  getOrderItem('Fries', 120, 1),
-  getOrderItem('Fries', 120, 1),
-  getOrderItem('Fries', 120, 1),
 ];
 
 export default function YourOrderTable() {

@@ -60,7 +60,7 @@ function Navbar() {
     errorCheckingLogin
   } = useContext(LoggedInUserContext);
 
-  console.log({ isLoggedIn, loggedInUser, errorCheckingLogin });
+  // console.log({ isLoggedIn, loggedInUser, errorCheckingLogin });
 
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
@@ -127,8 +127,8 @@ function Navbar() {
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => {
-              console.log(loggedInUser?.role);
-              console.log(page.hideFrom); 
+              // console.log(loggedInUser?.role);
+              // console.log(page.hideFrom); 
               if (page.hideFrom.includes(loggedInUser?.role)) return null;
 
               const buttonOnClick = (page.name == 'Login') ? handleOpen : handleCloseNavMenu;

@@ -21,6 +21,7 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
     [x] after conditionally rendering profile page link to only logged in ones, in the profile page show the user's details
 [ ] implement registration
 [ ] implement logout
+    - should delete jwt stored in localstorage
 [ ] implement account deletion
 [ ] add images to menu items in backend
     - store them as riles, dont store imgs in the db. store img urls in the db

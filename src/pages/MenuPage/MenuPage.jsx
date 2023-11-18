@@ -36,7 +36,6 @@ export default function MenuPage() {
 
   const [pleaseLoginSnackbarOpen, setPleaseLoginSnackbarOpen] = useState(false);
 
-  console.log({menuItems}); 
   return (
     <>
         <Grid container spacing={6}>

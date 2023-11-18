@@ -39,7 +39,7 @@ function getOrderItem(name, price, quantity) {
   }
 
 }
-const rows = [
+const initialOrder = [
   getOrderItem('Burger', 200, 2),
   getOrderItem('Coke (Large)', 70, 2),
   getOrderItem('Fries', 120, 1),
@@ -53,6 +53,45 @@ const rows = [
   getOrderItem('Fries9', 120, 1),
 ];
 
+[
+  {
+      "_id": "6522f71241594b1c9afd126d",
+      "name": "Burger",
+      "itemNumber": 1,
+      "price": 125,
+      "__v": 0,
+      "img": "http://localhost:3500/static/menuItems/burger.webp",
+      "description": "A very juicy burger"
+  },
+  {
+      "_id": "6522f71241594b1c9afd126e",
+      "name": "Pepsi",
+      "itemNumber": 2,
+      "price": 50,
+      "__v": 0,
+      "img": "http://localhost:3500/static/menuItems/pepsi.webp",
+      "description": "Extra fizzy"
+  },
+  {
+      "_id": "6523c3162962d2251ffadb70",
+      "name": "Fries",
+      "itemNumber": 3,
+      "price": 39,
+      "__v": 0,
+      "img": "http://localhost:3500/static/menuItems/fries.webp",
+      "description": "Crisp and golden"
+  },
+  {
+      "_id": "65340f353b285d6815a0076e",
+      "name": "testItem",
+      "itemNumber": 7000,
+      "price": 123,
+      "__v": 0,
+      "img": "http://localhost:3500/static/menuItems/testItem.webp",
+      "description": "Test Item Description"
+  }
+]
+
 function App() {
 
   const {
@@ -65,8 +104,9 @@ function App() {
 
 
   const { error, data } = useFetchApi('/menuItems', { allMenuItems: [] });
+  console.log({data}); 
 
-  const [yourOrder, setYourOrder] = useState(rows);
+  const [yourOrder, setYourOrder] = useState([]);
   const [yourOrderTableModalOpen, setYourOrderTableModalOpen] = useState(false);
 
   const hideNavBar = false;

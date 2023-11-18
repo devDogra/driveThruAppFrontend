@@ -43,6 +43,15 @@ export default function YourOrderTable({modalStyle}) {
 
   console.log(rows); 
 
+  function decrementOrderItemQuantity(orderItem) {
+    // setYourOrder(order => {
+    //   orderItem.quantity--;
+    //   if (orderItem.quantity <= 0) {
+    //     const updatedOrder = order.filter(order =>)
+    //   }
+    // })
+  }
+
   return (
     <TableContainer component={Paper} sx={ modalStyle || { maxHeight: 300 }}>
       <Table stickyHeader sx={{
@@ -93,7 +102,8 @@ export default function YourOrderTable({modalStyle}) {
 
               <TableCell align="right">
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <IconButton>
+
+                  <IconButton onClick={() => decrementOrderItemQuantity(row)}>
                     <RemoveIcon></RemoveIcon>
                   </IconButton>
 

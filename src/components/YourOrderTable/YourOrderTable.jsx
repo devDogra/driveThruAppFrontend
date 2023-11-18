@@ -33,27 +33,43 @@ import { YourOrderContext } from '../../contexts/yourOrderContext';
 //   getOrderItem('Fries', 120, 1),
 // ];
 
-export default function YourOrderTable({modalStyle}) {
-  const { 
-    yourOrder: rows, 
-    setYourOrder, 
-    yourOrderTableModalOpen, 
-    setYourOrderTableModalOpen 
+export default function YourOrderTable({ modalStyle }) {
+  const {
+    yourOrder,
+    setYourOrder,
+    yourOrderTableModalOpen,
+    setYourOrderTableModalOpen
   } = useContext(YourOrderContext)
 
-  console.log(rows); 
+  console.log(yourOrder);
 
-  function decrementOrderItemQuantity(orderItem) {
-    // setYourOrder(order => {
-    //   orderItem.quantity--;
-    //   if (orderItem.quantity <= 0) {
-    //     const updatedOrder = order.filter(order =>)
-    //   }
-    // })
+  function decrementOrderItemQuantity(orderItemToDecrement) {
+    // const idxInOrder = yourOrder.findIndex(oi => oi.item._id == orderItem.item._id);
+    const updatedYourOrder = [];
+
+    yourOrder.forEach((elem, idx) => {
+
+      if (elem.item._id == orderItemToDecrement.item._id) {
+      
+        const quantity = elem.quantity - 1;
+        if (quantity <= 0) return;
+
+        updatedYourOrder.push({...elem, quantity })
+      } else {
+        updatedYourOrder.push(elem);
+      }
+    });
+
+    setYourOrder(updatedYourOrder);
+
+
+
+
+    console.log({ idxInOrder });
   }
 
   return (
-    <TableContainer component={Paper} sx={ modalStyle || { maxHeight: 300 }}>
+    <TableContainer component={Paper} sx={modalStyle || { maxHeight: 300 }}>
       <Table stickyHeader sx={{
         minWidth: 650, "& .MuiTableRow-root:hover": {
           backgroundColor: blueGrey[50],
@@ -77,7 +93,7 @@ export default function YourOrderTable({modalStyle}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {yourOrder.map((row) => (
             <TableRow
               key={row.item.name}
               sx={{

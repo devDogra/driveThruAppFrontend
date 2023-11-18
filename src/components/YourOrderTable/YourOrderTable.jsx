@@ -48,12 +48,9 @@ export default function YourOrderTable({ modalStyle }) {
     const updatedYourOrder = [];
 
     yourOrder.forEach((elem, idx) => {
-
       if (elem.item._id == orderItemToDecrement.item._id) {
-      
         const quantity = elem.quantity - 1;
         if (quantity <= 0) return;
-
         updatedYourOrder.push({...elem, quantity })
       } else {
         updatedYourOrder.push(elem);
@@ -61,11 +58,21 @@ export default function YourOrderTable({ modalStyle }) {
     });
 
     setYourOrder(updatedYourOrder);
+  }
 
+  function incrementOrderItemQuantity(orderItemToIncrement) {
+    const updatedYourOrder = [];
 
+    yourOrder.forEach((elem, idx) => {
+      if (elem.item._id == orderItemToIncrement.item._id) {
+        const quantity = elem.quantity + 1;
+        updatedYourOrder.push({...elem, quantity })
+      } else {
+        updatedYourOrder.push(elem);
+      }
+    });
 
-
-    console.log({ idxInOrder });
+    setYourOrder(updatedYourOrder);
   }
 
   return (
@@ -125,7 +132,7 @@ export default function YourOrderTable({ modalStyle }) {
 
                   <Typography>{row.quantity}</Typography>
 
-                  <IconButton>
+                  <IconButton onClick={() => incrementOrderItemQuantity(row)}>
                     <AddIcon></AddIcon>
                   </IconButton>
                 </Box>

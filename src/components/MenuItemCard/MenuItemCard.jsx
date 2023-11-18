@@ -9,7 +9,8 @@ import BurgerImage from '../../assets/burger.jpeg'
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import Box from '@mui/material/Box'
 
-export default function MenuItemCard({ item }) {
+export default function MenuItemCard({ item, openYourOrderTableModal }) {
+
   return (
     <Card sx={{ maxWidth: 256 }}>
       <CardMedia
@@ -30,7 +31,7 @@ export default function MenuItemCard({ item }) {
             <CurrencyRupeeIcon></CurrencyRupeeIcon>
             <Typography>{ item.price }</Typography>
         </Box>
-        <Button size="small">Add+</Button>
+        <Button size="small" onClick={openYourOrderTableModal}>Add+</Button>
       </CardActions>
     </Card>
   );

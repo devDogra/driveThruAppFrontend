@@ -15,29 +15,34 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { blueGrey } from '@mui/material/colors';
+import { useContext } from 'react';
+import { YourOrderContext } from '../../contexts/yourOrderContext';
+// function getOrderItem(name, price, quantity) {
+//   return {
+//     item: {
+//       name,
+//       price,
+//     },
+//     quantity,
+//   }
 
-
-function createData(name, calories, fat,) {
-  return { name, calories, fat, carbs, protein };
-}
-
-function getOrderItem(name, price, quantity) {
-  return {
-    item: {
-      name,
-      price,
-    },
-    quantity,
-  }
-
-}
-const rows = [
-  getOrderItem('Burger', 200, 2),
-  getOrderItem('Coke (Large)', 70, 2),
-  getOrderItem('Fries', 120, 1),
-];
+// }
+// const rows = [
+//   getOrderItem('Burger', 200, 2),
+//   getOrderItem('Coke (Large)', 70, 2),
+//   getOrderItem('Fries', 120, 1),
+// ];
 
 export default function YourOrderTable() {
+  const { 
+    yourOrder: rows, 
+    setYourOrder, 
+    yourOrderTableModalOpen, 
+    setYourOrderTableModalOpen 
+  } = useContext(YourOrderContext)
+
+  console.log(rows); 
+
   return (
     <TableContainer component={Paper} sx={{ maxHeight: 300 }}>
       <Table stickyHeader sx={{
@@ -48,7 +53,7 @@ export default function YourOrderTable() {
       }} size="small" aria-label="a dense table" >
         <TableHead >
           <TableRow hover>
-            <TableCell sx={{ bgcolor: 'primary.light', pl:8 }} align="start">
+            <TableCell sx={{ bgcolor: 'primary.light', pl: 8 }} align="start">
               <Typography variant="p" fontWeight="bold" textTransform="uppercase">Item</Typography>
             </TableCell>
 
@@ -74,7 +79,7 @@ export default function YourOrderTable() {
             >
 
               <TableCell component="th" scope="row" >
-                <Box sx={{ display: "flex", alignItems: "center",}}>
+                <Box sx={{ display: "flex", alignItems: "center", }}>
                   <IconButton aria-label="delete" size="large">
                     <DeleteIcon />
                   </IconButton>
@@ -87,7 +92,7 @@ export default function YourOrderTable() {
               </TableCell>
 
               <TableCell align="right">
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent:"center" }}>
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <IconButton>
                     <RemoveIcon></RemoveIcon>
                   </IconButton>
@@ -102,7 +107,7 @@ export default function YourOrderTable() {
 
               <TableCell align="center">
                 {row.quantity * row.item.price}
-                </TableCell>
+              </TableCell>
 
             </TableRow>
           ))}

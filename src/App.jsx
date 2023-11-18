@@ -11,17 +11,40 @@ import MenuPage from './pages/MenuPage/MenuPage'
 import HomePage from './pages/HomePage/HomePage'
 // This hook gets the INITIAL LOGGED-IN INFO. Keyword => INITIAL, i.e info when the app renders on whether the user is logged in or not
 import useIsLoggedIn from '../hooks/useIsLoggedIn'
+
 import { LoggedInUserContext } from './contexts/loggedInUserContext'
 import { MenuItemsContext } from './contexts/menuItemsContext'
+import { YourOrderContext } from './contexts/yourOrderContext';
+
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { Routes, Route } from 'react-router-dom'
 import DynamicBreadcrumbs from './components/DynamicBreadcrumbs/DynamicBreadcrumbs'
 import useFetchApi from '../hooks/useFetchApi'
+import {useState} from 'react'
+
 
 const hideNavbarOnPages = [
   '/login',
   '/register',
 ]
+
+
+function getOrderItem(name, price, quantity) {
+  return {
+    item: {
+      name,
+      price,
+    },
+    quantity,
+  }
+
+}
+const rows = [
+  getOrderItem('Burger', 200, 2),
+  getOrderItem('Coke (Large)', 70, 2),
+  getOrderItem('Fries', 120, 1),
+  getOrderItem('Fries2', 120, 1),
+];
 
 function App() {
 
@@ -36,6 +59,9 @@ function App() {
 
   const { error, data } = useFetchApi('/menuItems', { allMenuItems: [] });
 
+  const [yourOrder, setYourOrder] = useState(rows);
+  const [yourOrderTableModalOpen, setYourOrderTableModalOpen] = useState(false);
+
   const hideNavBar = false;
   return (
     <>
@@ -49,26 +75,32 @@ function App() {
         <MenuItemsContext.Provider value={{
           allMenuItems: data?.allMenuItems,
         }}>
+          <YourOrderContext.Provider value={{
+            yourOrder,
+            yourOrderTableModalOpen,
+            setYourOrderTableModalOpen,
+            setYourOrder,
+          }}>
 
-          {hideNavBar || (
-            <Navbar></Navbar>
-          )}
+            {hideNavBar || (
+              <Navbar></Navbar>
+            )}
 
-          <Container sx={{ py: 10 }}>
-            {/* <MenuPage /> */}
-            {hideNavBar || <DynamicBreadcrumbs />}
+            <Container sx={{ py: 10 }}>
+              {/* <MenuPage /> */}
+              {hideNavBar || <DynamicBreadcrumbs />}
 
 
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/menu" element={<MenuPage />} />
-            </Routes>
-            {/* <HomePage /> */}
-            {/* <ProfilePage/> */}
-          </Container>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/menu" element={<MenuPage />} />
+              </Routes>
+              {/* <HomePage /> */}
+              {/* <ProfilePage/> */}
+            </Container>
 
-          
+          </YourOrderContext.Provider>
         </MenuItemsContext.Provider>
       </LoggedInUserContext.Provider>
     </>

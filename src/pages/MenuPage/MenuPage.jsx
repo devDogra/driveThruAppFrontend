@@ -41,7 +41,7 @@ export default function MenuPage() {
         <Grid container spacing={6}>
             {
               menuItems.map(item => (
-                <Grid xs={"auto"}>
+                <Grid xs={"auto"} key={item._id}>
                   <MenuItemCard 
                     item={item} 
                     openYourOrderTableModal={() => {

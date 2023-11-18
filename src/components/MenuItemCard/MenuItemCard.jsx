@@ -29,7 +29,7 @@ export default function MenuItemCard({ item, openYourOrderTableModal }) {
     // Use filter, but better is to maintain a set of items
     // DOES NOT MATTER because an order will be very small, so complexity won't be an issue
     
-    const itemAlreadyInOrder = yourOrder.find(item => item._id == itemToAdd._id); 
+    const itemAlreadyInOrder = yourOrder.find(orderItem => orderItem.item._id == itemToAdd._id); 
     if (itemAlreadyInOrder) return;
 
     // else, this item is not already in our order so add it with quantity 1

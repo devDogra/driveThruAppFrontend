@@ -8,8 +8,12 @@ import Link from '@mui/material/Link'
 import { nanoid } from 'nanoid'
 import { useContext, useEffect, useState } from 'react'
 import api from '../../../config/axios.config'
+import Box from '@mui/material/Box'; 
+import Alert from '@mui/material/Alert'; 
+import Snackbar from '@mui/material/Snackbar'; 
 import { MenuItemsContext } from '../../contexts/menuItemsContext'
 import { YourOrderContext } from '../../contexts/yourOrderContext'
+import { LoggedInUserContext } from '../../contexts/loggedInUserContext'
 import YourOrderTableModal from '../../components/YourOrderTableModal/YourOrderTableModal'
 
 export default function MenuPage() {
@@ -22,6 +26,16 @@ export default function MenuPage() {
     setYourOrderTableModalOpen 
   } = useContext(YourOrderContext)
 
+  const {
+    isLoggedIn,
+    loggedInUser,
+    setIsLoggedIn,
+    setLoggedInUser,
+    errorCheckingLogin
+  } = useContext(LoggedInUserContext);
+
+  const [pleaseLoginSnackbarOpen, setPleaseLoginSnackbarOpen] = useState(false);
+
   console.log({menuItems}); 
   return (
     <>
@@ -32,8 +46,11 @@ export default function MenuPage() {
                   <MenuItemCard 
                     item={item} 
                     openYourOrderTableModal={() => {
-                      setYourOrderTableModalOpen(true)
-                      console.log({yourOrderTableModalOpen}); 
+                      if (isLoggedIn) {
+                        setYourOrderTableModalOpen(true)
+                      } else {
+                        setPleaseLoginSnackbarOpen(true); 
+                      }
                     }}
                   >
                   </MenuItemCard>
@@ -43,6 +60,13 @@ export default function MenuPage() {
         </Grid>
 
         <YourOrderTableModal></YourOrderTableModal>
+
+        <Snackbar
+          open={pleaseLoginSnackbarOpen}
+          autoHideDuration={2000}
+          onClose={() => setPleaseLoginSnackbarOpen(false)}
+          message="Login to order"
+        />
 
     </>
   )

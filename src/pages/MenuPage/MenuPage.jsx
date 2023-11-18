@@ -9,9 +9,19 @@ import { nanoid } from 'nanoid'
 import { useContext, useEffect, useState } from 'react'
 import api from '../../../config/axios.config'
 import { MenuItemsContext } from '../../contexts/menuItemsContext'
+import { YourOrderContext } from '../../contexts/yourOrderContext'
+import YourOrderTableModal from '../../components/YourOrderTableModal/YourOrderTableModal'
 
 export default function MenuPage() {
   const { allMenuItems : menuItems } = useContext(MenuItemsContext);
+
+  const { 
+    yourOrder,
+    setYourOrder, 
+    yourOrderTableModalOpen, 
+    setYourOrderTableModalOpen 
+  } = useContext(YourOrderContext)
+
   console.log({menuItems}); 
   return (
     <>
@@ -19,11 +29,20 @@ export default function MenuPage() {
             {
               menuItems.map(item => (
                 <Grid xs={"auto"}>
-                  <MenuItemCard item={item}></MenuItemCard>
+                  <MenuItemCard 
+                    item={item} 
+                    openYourOrderTableModal={() => {
+                      setYourOrderTableModalOpen(true)
+                      console.log({yourOrderTableModalOpen}); 
+                    }}
+                  >
+                  </MenuItemCard>
                 </Grid>
               ))
             }
         </Grid>
+
+        <YourOrderTableModal></YourOrderTableModal>
 
     </>
   )

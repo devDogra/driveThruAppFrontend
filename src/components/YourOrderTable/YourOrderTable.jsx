@@ -33,7 +33,7 @@ import { YourOrderContext } from '../../contexts/yourOrderContext';
 //   getOrderItem('Fries', 120, 1),
 // ];
 
-export default function YourOrderTable() {
+export default function YourOrderTable({modalStyle}) {
   const { 
     yourOrder: rows, 
     setYourOrder, 
@@ -44,7 +44,7 @@ export default function YourOrderTable() {
   console.log(rows); 
 
   return (
-    <TableContainer component={Paper} sx={{ maxHeight: 300 }}>
+    <TableContainer component={Paper} sx={ modalStyle || { maxHeight: 300 }}>
       <Table stickyHeader sx={{
         minWidth: 650, "& .MuiTableRow-root:hover": {
           backgroundColor: blueGrey[50],

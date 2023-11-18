@@ -44,6 +44,13 @@ const rows = [
   getOrderItem('Coke (Large)', 70, 2),
   getOrderItem('Fries', 120, 1),
   getOrderItem('Fries2', 120, 1),
+  getOrderItem('Fries3', 120, 1),
+  getOrderItem('Fries4', 120, 1),
+  getOrderItem('Fries5', 120, 1),
+  getOrderItem('Fries6', 120, 1),
+  getOrderItem('Fries7', 120, 1),
+  getOrderItem('Fries8', 120, 1),
+  getOrderItem('Fries9', 120, 1),
 ];
 
 function App() {

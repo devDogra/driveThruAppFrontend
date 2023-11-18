@@ -11,6 +11,8 @@ import storeAccessTokenInLocalStorage from '../../../utils/storeAccessTokenInLoc
 import api from '../../../config/axios.config'
 import checkIfLoggedIn from '../../../utils/checkIfLoggedIn';
 import useIsLoggedIn from '../../../hooks/useIsLoggedIn';
+import { useContext } from 'react';
+import { YourOrderContext } from '../../contexts/yourOrderContext';
 import YourOrderTable from '../YourOrderTable/YourOrderTable';
 
 const style = {
@@ -18,18 +20,32 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    // width: 400,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    maxHeight: 300,
+    // overflow: "auto",
+    // p: 4,
 
 };
 
 const apiURL = import.meta.env.VITE_API_URL; 
 
 
-export default function YourOrderTableModal({ yourOrderTableModalOpen, handleClose }) {
+export default function YourOrderTableModal() {
+    const { 
+        yourOrder,
+        setYourOrder, 
+        yourOrderTableModalOpen, 
+        setYourOrderTableModalOpen 
+    } = useContext(YourOrderContext)
+
+    function handleClose() {
+        console.log("Closing YourOrderTableModal"); 
+        setYourOrderTableModalOpen(false); 
+    }
+
     return (
         <>
             <Modal
@@ -38,7 +54,7 @@ export default function YourOrderTableModal({ yourOrderTableModalOpen, handleClo
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-               <YourOrderTable></YourOrderTable>
+               <YourOrderTable modalStyle={style}></YourOrderTable>
             </Modal>
    
         </>

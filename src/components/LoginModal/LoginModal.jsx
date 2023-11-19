@@ -43,6 +43,7 @@ export default function LoginModal({ loginModalOpen, handleClose, setLoginModalO
         setShowSuccessMsg(true);
         setTimeout(() => {
             setLoginModalOpen(false);
+            showSuccessMsg(false);
         }, 1000)
 
         

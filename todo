@@ -34,13 +34,13 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
     [x] make a context to track the current order (items, quant etc)
     as global application state 
     [x] in the cartmenu add an option to submit the order (POST /orders)
-will have to create a context to track:
-    yourorder
-    yourordertablemodalopenstatus (bc cart can be opened from multiple pages in the app)
-    [ ] reset when order is placed
+    will have to create a context to track:
+        yourorder
+        yourordertablemodalopenstatus (bc cart can be opened from multiple pages in the app)
+        [x] reset when order is placed
 
 [ ] implement previous orders
-    [ ] fetch all orders w/ status of "delivered/cancelled/pending" from the api 
+    [x] fetch all orders w/ status of "delivered/cancelled/pending" from the api 
     and show them 
     [ ] on pending orders show a cancel button
     [ ] on clicking cancel button, call the api to cancel the order. 

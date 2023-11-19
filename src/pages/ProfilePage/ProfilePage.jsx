@@ -25,10 +25,23 @@ export default function ProfilePage() {
     errorCheckingLogin
   } = useContext(LoggedInUserContext);
 
-  // Redirect if not logged in 
   const navigate = useNavigate();
+
+  function logoutUser() {
+    window.localStorage.removeItem('accessToken'); 
+    setIsLoggedIn(false);
+    setLoggedInUser(null);
+    navigate("/");
+
+    // To make the loginSuccessful message go away without having to lift state up -_-
+    window.location.reload(); 
+  }
+
+  // Redirect if not logged in 
   if (!isLoggedIn || !loggedInUser) {
     navigate("/"); 
+    // Logged out => No JWT => JSX that uses the decoded JWT will throw the error
+    return <></>
   }
 
   console.log("profile pg login info: ");
@@ -85,8 +98,12 @@ export default function ProfilePage() {
             </Box>
 
 
+
           </Paper>
           <Button variant="contained" size="large" endIcon={<ArrowRightAltIcon />} sx={{ my: 4, width: "100%"}}>Go to Menu </Button>
+      
+          <Button variant="contained" color="error" size="large" endIcon={<ArrowRightAltIcon />} sx={{ mb: 4, width: "100%"}} onClick={logoutUser}>Logout </Button>
+
         </Box>
 
         <Box your-order sx={{ flexGrow: 1, p: 2 }}>

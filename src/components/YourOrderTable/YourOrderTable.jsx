@@ -78,6 +78,10 @@ export default function YourOrderTable({ modalStyle }) {
       .then(response => {
         const { success, error, message: errorMessage } = response.data;
         alert(success);
+        
+        // Reset yourOrder
+        setYourOrder([]);
+        setYourOrderTableModalOpen(false);
       })
       .catch(({response}) => {
         const error = response?.data?.error;

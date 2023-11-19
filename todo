@@ -37,7 +37,7 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
 will have to create a context to track:
     yourorder
     yourordertablemodalopenstatus (bc cart can be opened from multiple pages in the app)
-    
+    [ ] reset when order is placed
 
 [ ] implement previous orders
     [ ] fetch all orders w/ status of "delivered/cancelled/pending" from the api 

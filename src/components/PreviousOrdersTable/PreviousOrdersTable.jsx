@@ -11,52 +11,17 @@ import Tooltip from '@mui/material/Tooltip'
 import { blueGrey } from '@mui/material/colors';
 import { nanoid } from 'nanoid';
 import useFetchApi from '../../../hooks/useFetchApi';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import api from '../../../config/axios.config';
 import { jwtDecode } from "jwt-decode";
-
-
-function getOrderItem(name, price, quantity) {
-  return {
-    item: {
-      name, 
-      price,
-    },
-    quantity,
-  }
-
-}
-
-function getOrder(big) {
-    const order = {
-        items: [
-            getOrderItem('Burger', 200, 2),
-            getOrderItem('Coke (Large)', 70, 2),
-            getOrderItem('Fries', 120, 1),
-            getOrderItem('Fries', 120, 1),
-        ],
-        id: nanoid(),
-    }
-    if (big) {
-        order.items = [...order.items, ...order.items, ...order.items]
-    }
-    return order; 
-}
-
-const orders = [
-    getOrder(),
-    getOrder(true),
-    getOrder(),
-]
-
-console.log({orders}); 
+import { format } from 'date-fns';
 
 function getOrderStringAndPrice(order) {
     let totalPrice = 0;
-
+ 
     let orderString = order.items
         .map(orderItem => {
-            const { name, price } = orderItem.item;
+            const { name, price } = orderItem.menuItemId;
             const quantity = orderItem.quantity;
             const result = `${name} x ${quantity}`
             totalPrice += price; 
@@ -74,8 +39,7 @@ function getOrderStringAndPrice(order) {
 }
 
 export default function PreviousOrdersTable() {
-  // const { data, error } = useFetchApi("/orders");
-  // console.log({data, error}); 
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const accessToken = window.localStorage.getItem('accessToken'); 
@@ -88,8 +52,10 @@ export default function PreviousOrdersTable() {
     }
     
     // Get all orders by the currently logged in user
-    api.get(`/orders?userId=${loggedInUserId}`, config).then(response => {
-      console.log(response.data); 
+    api.get(`/orders?userId=${loggedInUserId}&populateMenuItems=true`, config).then(response => {
+      const { orders, success } = response.data; 
+      console.log({orders}); 
+      setOrders(orders);
     })
 
   }, [])
@@ -102,8 +68,17 @@ export default function PreviousOrdersTable() {
     } }} aria-label="a sparse table" >
         <TableHead >
           <TableRow hover>
+
             <TableCell sx={{bgcolor: 'primary.light'}}>
               <Typography variant="p" fontWeight="bold" textTransform="uppercase">Items</Typography>
+            </TableCell>
+
+            <TableCell sx={{bgcolor: 'primary.light'}}>
+              <Typography variant="p" fontWeight="bold" textTransform="uppercase">Made on</Typography>
+            </TableCell>
+
+            <TableCell sx={{bgcolor: 'primary.light'}}>
+              <Typography variant="p" fontWeight="bold" textTransform="uppercase">Status</Typography>
             </TableCell>
 
             <TableCell sx={{bgcolor: 'primary.light'}} align="right">
@@ -115,7 +90,7 @@ export default function PreviousOrdersTable() {
         <TableBody>
           {orders.map((order) => (
             <TableRow
-              key={order.id}
+              key={order._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 }, hover: {
                 bgcolor:'red'
               } }}
@@ -128,6 +103,15 @@ export default function PreviousOrdersTable() {
                                 <Tooltip title={trimmedOrderString && orderString}>
                                     <TableCell component="th" scope="row">{trimmedOrderString || orderString}</TableCell>
                                 </Tooltip>
+
+                                <TableCell>
+                                  {format(new Date(order.createdAt),"dd MMM yyyy, 'at' HH:mm" )}
+                                </TableCell>
+
+                                <TableCell>
+                                  {order.state}
+                                </TableCell>
+
                                 <TableCell align="right">{totalPrice}</TableCell>
                             </>
                         );

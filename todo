@@ -23,15 +23,15 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
 [ ] implement logout
     - should delete jwt stored in localstorage
 [ ] implement account deletion
-[ ] add images to menu items in backend
+[x] add images to menu items in backend
     - store them as riles, dont store imgs in the db. store img urls in the db
-[ ] populate menu items from api 
+[x] populate menu items from api 
 
 [ ] make a cartmenu component
-    [ ] clicking 'add' on menu items opens the cartmenu (as a modal) and adds 
+    [x] clicking 'add' on menu items opens the cartmenu (as a modal) and adds 
     that item to it (w/ quantity 1)
-    [ ] replace the yourordercomponent with the cartmenu in the profile page
-    [ ] make a context to track the current order (items, quant etc)
+    [x] replace the yourordercomponent with the cartmenu in the profile page
+    [x] make a context to track the current order (items, quant etc)
     as global application state 
     [ ] in the cartmenu add an option to submit the order (POST /orders)
 will have to create a context to track:

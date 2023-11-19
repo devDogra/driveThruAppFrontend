@@ -17,6 +17,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { blueGrey } from '@mui/material/colors';
 import { useContext } from 'react';
 import { YourOrderContext } from '../../contexts/yourOrderContext';
+import { TableFooter } from '@mui/material';
 // function getOrderItem(name, price, quantity) {
 //   return {
 //     item: {
@@ -51,7 +52,7 @@ export default function YourOrderTable({ modalStyle }) {
       if (elem.item._id == orderItemToDecrement.item._id) {
         const quantity = elem.quantity - 1;
         if (quantity <= 0) return;
-        updatedYourOrder.push({...elem, quantity })
+        updatedYourOrder.push({ ...elem, quantity })
       } else {
         updatedYourOrder.push(elem);
       }
@@ -66,7 +67,7 @@ export default function YourOrderTable({ modalStyle }) {
     yourOrder.forEach((elem, idx) => {
       if (elem.item._id == orderItemToIncrement.item._id) {
         const quantity = elem.quantity + 1;
-        updatedYourOrder.push({...elem, quantity })
+        updatedYourOrder.push({ ...elem, quantity })
       } else {
         updatedYourOrder.push(elem);
       }
@@ -139,12 +140,40 @@ export default function YourOrderTable({ modalStyle }) {
               </TableCell>
 
               <TableCell align="center">
-                {row.quantity * row.item.price}
+                <Typography>
+                  {row.quantity * row.item.price}
+                </Typography>
               </TableCell>
 
             </TableRow>
           ))}
+
         </TableBody>
+
+        <TableFooter>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell align="right">
+              <Typography fontSize={"1.5rem"}>
+                Total: {
+                  yourOrder.reduce((total, orderItem) => {
+                    const orderItemCost = orderItem.item.price * orderItem.quantity;
+                    return total + orderItemCost;
+                  }, 0)
+                }
+              </Typography>
+            </TableCell>
+
+            <TableCell align="center">
+              <Button color="success" variant="contained"
+                sx={{ borderRadius: 10, mt: 1 }}
+                size="large"
+              >
+                Submit
+              </Button>
+            </TableCell>
+          </TableRow>
+        </TableFooter>
       </Table>
     </TableContainer>
   );

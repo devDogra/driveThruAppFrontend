@@ -10,6 +10,11 @@ import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip'
 import { blueGrey } from '@mui/material/colors';
 import { nanoid } from 'nanoid';
+import useFetchApi from '../../../hooks/useFetchApi';
+import { useEffect } from 'react';
+import api from '../../../config/axios.config';
+import { jwtDecode } from "jwt-decode";
+
 
 function getOrderItem(name, price, quantity) {
   return {
@@ -21,7 +26,6 @@ function getOrderItem(name, price, quantity) {
   }
 
 }
-
 
 function getOrder(big) {
     const order = {
@@ -70,6 +74,26 @@ function getOrderStringAndPrice(order) {
 }
 
 export default function PreviousOrdersTable() {
+  // const { data, error } = useFetchApi("/orders");
+  // console.log({data, error}); 
+
+  useEffect(() => {
+    const accessToken = window.localStorage.getItem('accessToken'); 
+    const loggedInUserId = jwtDecode(accessToken).user;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    }
+    
+    // Get all orders by the currently logged in user
+    api.get(`/orders?userId=${loggedInUserId}`, config).then(response => {
+      console.log(response.data); 
+    })
+
+  }, [])
+
   return (
     <TableContainer component={Paper} sx={{maxHeight: 300}}>
       <Table stickyHeader sx={{ minWidth: 650, "& .MuiTableRow-root:hover": {

@@ -27,13 +27,13 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
     - store them as riles, dont store imgs in the db. store img urls in the db
 [x] populate menu items from api 
 
-[ ] make a cartmenu component
+[x] make a cartmenu component
     [x] clicking 'add' on menu items opens the cartmenu (as a modal) and adds 
     that item to it (w/ quantity 1)
     [x] replace the yourordercomponent with the cartmenu in the profile page
     [x] make a context to track the current order (items, quant etc)
     as global application state 
-    [ ] in the cartmenu add an option to submit the order (POST /orders)
+    [x] in the cartmenu add an option to submit the order (POST /orders)
 will have to create a context to track:
     yourorder
     yourordertablemodalopenstatus (bc cart can be opened from multiple pages in the app)

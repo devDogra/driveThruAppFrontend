@@ -18,6 +18,8 @@ import { blueGrey } from '@mui/material/colors';
 import { useContext } from 'react';
 import { YourOrderContext } from '../../contexts/yourOrderContext';
 import { TableFooter } from '@mui/material';
+import api from '../../../config/axios.config';
+import checkIfJwtExpired from '../../../utils/checkIfJwtExpired';
 // function getOrderItem(name, price, quantity) {
 //   return {
 //     item: {
@@ -43,6 +45,50 @@ export default function YourOrderTable({ modalStyle }) {
   } = useContext(YourOrderContext)
 
   console.log(yourOrder);
+
+  function handleOrderSubmit() {
+    const order = {
+      items: yourOrder.map(orderItem => ({
+        quantity: orderItem.quantity,
+        menuItemId: orderItem.item._id,
+      }))
+    }
+
+    if (order.items.length <= 0) {
+      alert("Order must have atleast 1 item");
+      return;
+    }
+
+
+    const accessToken = window.localStorage.getItem('accessToken');
+    if (!accessToken) {
+      return alert("Please log in");
+    }
+    if (checkIfJwtExpired(accessToken)) {
+      return alert("Please log in again"); 
+    }
+
+    const config = {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`
+      }
+    }
+
+    api.post('/orders', order, config)
+      .then(response => {
+        const { success, error, message: errorMessage } = response.data;
+        alert(success);
+      })
+      .catch(({response}) => {
+        const error = response?.data?.error;
+        let message = response?.data?.message;
+
+        console.log(error);
+        if (error == 'jwt expired') message = "Please login again";
+        alert(message);
+      })
+
+  }
 
   function decrementOrderItemQuantity(orderItemToDecrement) {
     // const idxInOrder = yourOrder.findIndex(oi => oi.item._id == orderItem.item._id);
@@ -168,6 +214,7 @@ export default function YourOrderTable({ modalStyle }) {
               <Button color="success" variant="contained"
                 sx={{ borderRadius: 10, mt: 1 }}
                 size="large"
+                onClick={handleOrderSubmit}
               >
                 Submit
               </Button>

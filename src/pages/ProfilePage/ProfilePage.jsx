@@ -14,7 +14,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Paper from '@mui/material/Paper'
 import YourOrderTable from "../../components/YourOrderTable/YourOrderTable";
 import PreviousOrdersTable from "../../components/PreviousOrdersTable/PreviousOrdersTable";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
   const {
@@ -24,6 +24,13 @@ export default function ProfilePage() {
     setLoggedInUser,
     errorCheckingLogin
   } = useContext(LoggedInUserContext);
+
+  // Redirect if not logged in 
+  const navigate = useNavigate();
+  if (!isLoggedIn || !loggedInUser) {
+    navigate("/"); 
+  }
+
   console.log("profile pg login info: ");
   console.log({
     isLoggedIn,

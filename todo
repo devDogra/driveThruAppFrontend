@@ -20,7 +20,7 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
             [x] on loading a page,, req to the validate route to check if a user is logged in or not, so we know what to display OR whether to redirect or not
     [x] after conditionally rendering profile page link to only logged in ones, in the profile page show the user's details
 [ ] implement registration
-[ ] implement logout
+[x] implement logout
     - should delete jwt stored in localstorage
 [ ] implement account deletion
 [x] add images to menu items in backend

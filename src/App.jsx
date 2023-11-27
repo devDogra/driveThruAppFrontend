@@ -19,6 +19,7 @@ import { YourOrderContext } from './contexts/yourOrderContext';
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import { Routes, Route } from 'react-router-dom'
 import DynamicBreadcrumbs from './components/DynamicBreadcrumbs/DynamicBreadcrumbs'
+import Dashboard from './pages/Dashboard/Dashboard'
 import useFetchApi from '../hooks/useFetchApi'
 import {useState} from 'react'
 
@@ -142,6 +143,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/menu" element={<MenuPage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
               {/* <HomePage /> */}
               {/* <ProfilePage/> */}

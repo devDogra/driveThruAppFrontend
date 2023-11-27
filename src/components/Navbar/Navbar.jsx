@@ -32,7 +32,8 @@ const pages = [
   { name: 'About Us', route: '/about', hideFrom: [] },
   { name: 'Contact Us', route: '/contact', hideFrom: [] },
   { name: 'Login', route: null, hideFrom: [roles.Customer, roles.Employee, roles.Manager, roles.Admin] },
-  { name: 'Profile', route: '/profile', hideFrom: [roles.Anonymous]}
+  { name: 'Profile', route: '/profile', hideFrom: [roles.Anonymous]}, 
+  { name: 'Dashboard', route: '/dashboard', hideFrom: [roles.Anonymous, roles.Customer]}, 
 ]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 

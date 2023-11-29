@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LoggedInUserContext } from "../../contexts/loggedInUserContext";
 import roles from "../../../config/roles";
+import { Typography } from "@mui/material";
+import ActiveOrdersTable from "../../components/ActiveOrdersTable/ActiveOrdersTable";
 
 
 export default function Dashboard() {
@@ -20,26 +22,38 @@ export default function Dashboard() {
         return <></>
     }
 
-    if (loggedInUser.role == roles.Employee) {
-        return (
-            <>
-                Employee Dashboard
-            </>
-        )
-    }
+    // if (loggedInUser.role == roles.Employee) {
+    //     return (
+    //         <>
+    //             Employee Dashboard
+    //         </>
+    //     )
+    // }
+    // if (loggedInUser.role == roles.Manager) {
+    //     return (
+    //         <>
+    //             Manager Dashboard
+    //         </>
+    //     )
+    // }
 
-    if (loggedInUser.role == roles.Manager) {
-        return (
-            <>
-                Manager Dashboard
-            </>
-        )
-    }
-
+    const isManager = loggedInUser.role == roles.Manager;
 
     return (
         <>
-            { JSON.stringify(loggedInUser) }
+            <Typography>
+                { JSON.stringify(loggedInUser) }
+            </Typography>
+
+            <Typography variant='h3' textTransform='uppercase' fontWeight='bold'>Active Orders</Typography>
+
+            <ActiveOrdersTable></ActiveOrdersTable>
+
+            { isManager && 
+                <>
+                    <Typography variant='h3' textTransform='uppercase' fontWeight='bold'>Manage Users</Typography>
+                </>
+            }
         </>
     );
 }

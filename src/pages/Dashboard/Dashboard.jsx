@@ -107,7 +107,6 @@ export default function Dashboard() {
                
                     {/* Found user card */}
                     {foundUser && <Paper sx={{ display: 'flex', gap: "1rem", p: 4, flexShrink: 1, py: 6, borderRadius: 4, mt:4 }} profile-card>
-
                         <AccountBoxIcon sx={{ fontSize: "6rem", alignSelf: 'center' }}></AccountBoxIcon>
                         <Box>
                             <Typography variant='h6' textTransform='uppercase' mb={1} fontWeight='bold'>
@@ -128,8 +127,17 @@ export default function Dashboard() {
                                 </Typography>
                             </Box>
                         </Box>
+                        <Box sx={{alignSelf:'center', display:'flex', gap:2, marginLeft:4}}>
+                            <Button variant="contained" color="error" sx={{alignSelf: 'center'}}>Demote role</Button>
+                            <Button variant="contained" color="primary" sx={{alignSelf: 'center'}}>Elevate role</Button>
+                        </Box>
+                        
+                        
                     </Paper>
+               
                     }
+                
+
                 </>
             }
         </>

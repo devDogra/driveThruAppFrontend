@@ -19,6 +19,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box'; 
 import checkIfJwtExpired from '../../../utils/checkIfJwtExpired';
 
+
 function getOrderStringAndPrice(order) {
     let totalPrice = 0;
  

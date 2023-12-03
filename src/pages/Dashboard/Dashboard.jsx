@@ -90,9 +90,36 @@ export default function Dashboard() {
     }
     function handleRoleSelect(event) {
         const role = event.target.value; 
-        console.log({role, selectedRole}); 
+        
+        const accessToken = window.localStorage.getItem('accessToken');
+        if (!accessToken) return alert("Please log in");
+        if (checkIfJwtExpired(accessToken))  {
+            alert("Please log in again");
+            window.location.reload();
+            return; 
+        }
 
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${accessToken}`
+            }
+        }
+        console.log({foundUser, role, selectedRole}); 
+        api.put(`/users/${foundUser._id}`, { role }, config)
+            .then(response => {
+                setSelectedRole(role)
+                setFoundUser({...foundUser, role}); 
+                alert("Role updated"); 
+            })
+            .catch(({ response }) => {
+                const error = response?.data?.error;
+                let message = response?.data?.message;
+                if (error) console.log(error);
+                if (error == 'jwt expired') message = "Please login again";
+                alert(message || error);
+            })
     }
+
     const isAdmin = loggedInUser.role == roles.Admin;
 
     return (

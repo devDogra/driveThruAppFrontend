@@ -16,6 +16,10 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import BadgeIcon from '@mui/icons-material/Badge';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Paper from '@mui/material/Paper'
+import InputLabel from '@mui/material/InputLabel';
+import SelectItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 export default function Dashboard() {
     const {
@@ -28,6 +32,7 @@ export default function Dashboard() {
 
     const formRef = useRef(null);
     const [foundUser, setFoundUser] = useState(null);
+    const [selectedRole, setSelectedRole] = useState("Customer");
 
     const navigate = useNavigate();
 
@@ -37,10 +42,14 @@ export default function Dashboard() {
     }
 
     function getUserByPhoneNumber(phone) {
-
+        if (phone.length !== 10) return alert("Invalid phone number"); 
         const accessToken = window.localStorage.getItem('accessToken');
         if (!accessToken) return alert("Please log in");
-        if (checkIfJwtExpired(accessToken)) return alert("Please log in again");
+        if (checkIfJwtExpired(accessToken))  {
+            alert("Please log in again");
+            window.location.reload();
+            return; 
+        }
 
         const config = {
             headers: {
@@ -54,6 +63,8 @@ export default function Dashboard() {
                 console.log(response);
 
                 setFoundUser(response.data.user);
+                // Important not to use foundUser.role (setState is async)
+                setSelectedRole(response.data.user.role);
             })
             .catch(({ response }) => {
                 console.log("FailureResp");
@@ -75,6 +86,11 @@ export default function Dashboard() {
         console.log({ data });
 
         getUserByPhoneNumber(data.phone);
+
+    }
+    function handleRoleSelect(event) {
+        const role = event.target.value; 
+        console.log({role, selectedRole}); 
 
     }
     const isAdmin = loggedInUser.role == roles.Admin;
@@ -128,8 +144,25 @@ export default function Dashboard() {
                             </Box>
                         </Box>
                         <Box sx={{alignSelf:'center', display:'flex', gap:2, marginLeft:4}}>
-                            <Button variant="contained" color="error" sx={{alignSelf: 'center'}}>Demote role</Button>
-                            <Button variant="contained" color="primary" sx={{alignSelf: 'center'}}>Elevate role</Button>
+                            {/* <Button variant="contained" color="error" sx={{alignSelf: 'center'}}>Demote role</Button>
+                            <Button variant="contained" color="primary" sx={{alignSelf: 'center'}}>Elevate role</Button> */}
+                        {foundUser.role !== "Admin" &&
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={selectedRole}
+                                    label="Role"
+                                    onChange={handleRoleSelect}
+                                >
+                                    <SelectItem value={"Customer"}>Customer</SelectItem>
+                                    <SelectItem value={"Employee"}>Employee</SelectItem>
+                                    <SelectItem value={"Admin"}>Admin</SelectItem>
+                                </Select>
+                            </FormControl>
+                        }
+
                         </Box>
                         
                         

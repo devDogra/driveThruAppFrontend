@@ -39,11 +39,11 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
         yourordertablemodalopenstatus (bc cart can be opened from multiple pages in the app)
         [x] reset when order is placed
 
-[ ] implement previous orders
+[x] implement previous orders
     [x] fetch all orders w/ status of "delivered/cancelled/pending" from the api 
     and show them 
-    [ ] on pending orders show a cancel button
-    [ ] on clicking cancel button, call the api to cancel the order. 
+    [x] on pending orders show a cancel button
+    [x] on clicking cancel button, call the api to cancel the order. 
     if it respondes with an error, then TLE for cancellation so
     inform the customer that it cant be cancelled 
 [ ] implement editing account details (name)
@@ -51,9 +51,9 @@ REMINDER: accessTokens will expire in 120s, requiring relogins. Increase this ti
 --- customer app complete -- 
 
 -- additional func for employees vvv --- 
-[ ] show dashboard to emps, mgrs, admins
-[ ] emp can see pending orders 
-[ ] emp can set status to delivered for pending orders, or to cancelled
+[x] show dashboard to emps, mgrs, admins
+[x] emp can see pending orders 
+[x] emp can set status to delivered for pending orders, or to cancelled
 [ ] can search for orders by a particular phone number 
 
 

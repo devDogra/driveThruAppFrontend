@@ -20,6 +20,7 @@ import InputLabel from '@mui/material/InputLabel';
 import SelectItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import UpdateMenuItemsTable from "../../components/UpdateMenuItemsTable/UpdateMenuItemsTable";
 
 export default function Dashboard() {
     const {
@@ -42,13 +43,13 @@ export default function Dashboard() {
     }
 
     function getUserByPhoneNumber(phone) {
-        if (phone.length !== 10) return alert("Invalid phone number"); 
+        if (phone.length !== 10) return alert("Invalid phone number");
         const accessToken = window.localStorage.getItem('accessToken');
         if (!accessToken) return alert("Please log in");
-        if (checkIfJwtExpired(accessToken))  {
+        if (checkIfJwtExpired(accessToken)) {
             alert("Please log in again");
             window.location.reload();
-            return; 
+            return;
         }
 
         const config = {
@@ -89,14 +90,14 @@ export default function Dashboard() {
 
     }
     function handleRoleSelect(event) {
-        const role = event.target.value; 
-        
+        const role = event.target.value;
+
         const accessToken = window.localStorage.getItem('accessToken');
         if (!accessToken) return alert("Please log in");
-        if (checkIfJwtExpired(accessToken))  {
+        if (checkIfJwtExpired(accessToken)) {
             alert("Please log in again");
             window.location.reload();
-            return; 
+            return;
         }
 
         const config = {
@@ -104,12 +105,12 @@ export default function Dashboard() {
                 "Authorization": `Bearer ${accessToken}`
             }
         }
-        console.log({foundUser, role, selectedRole}); 
+        console.log({ foundUser, role, selectedRole });
         api.put(`/users/${foundUser._id}`, { role }, config)
             .then(response => {
                 setSelectedRole(role)
-                setFoundUser({...foundUser, role}); 
-                alert("Role updated"); 
+                setFoundUser({ ...foundUser, role });
+                alert("Role updated");
             })
             .catch(({ response }) => {
                 const error = response?.data?.error;
@@ -121,6 +122,7 @@ export default function Dashboard() {
     }
 
     const isAdmin = loggedInUser.role == roles.Admin;
+    const isManager = loggedInUser.role == roles.Manager;
 
     return (
         <>
@@ -132,6 +134,12 @@ export default function Dashboard() {
 
             <ActiveOrdersTable></ActiveOrdersTable>
 
+            {(isManager || isAdmin) && <>
+                <Typography variant='h3' textTransform='uppercase' fontWeight='bold' mt={8} mb={4}>Manage Menu</Typography>
+
+                <UpdateMenuItemsTable></UpdateMenuItemsTable>
+            </>}
+
             {isAdmin &&
                 <>
                     <Typography variant='h3' textTransform='uppercase' fontWeight='bold' mt={8}>Manage Users</Typography>
@@ -141,15 +149,15 @@ export default function Dashboard() {
                         component="form"
                         ref={formRef}
                         onSubmit={handleFormSubmit}
-                        sx={{display: "flex", alignItems:"stretch", mt:4, gap: 2}}
+                        sx={{ display: "flex", alignItems: "stretch", mt: 4, gap: 2 }}
                     >
                         <TextField name="phone" label="Enter phone no."></TextField>
 
                         <Button type="submit" variant="contained">Find User</Button>
                     </Box>
-               
+
                     {/* Found user card */}
-                    {foundUser && <Paper sx={{ display: 'flex', gap: "1rem", p: 4, flexShrink: 1, py: 6, borderRadius: 4, mt:4 }} profile-card>
+                    {foundUser && <Paper sx={{ display: 'flex', gap: "1rem", p: 4, flexShrink: 1, py: 6, borderRadius: 4, mt: 4 }} profile-card>
                         <AccountBoxIcon sx={{ fontSize: "6rem", alignSelf: 'center' }}></AccountBoxIcon>
                         <Box>
                             <Typography variant='h6' textTransform='uppercase' mb={1} fontWeight='bold'>
@@ -170,33 +178,34 @@ export default function Dashboard() {
                                 </Typography>
                             </Box>
                         </Box>
-                        <Box sx={{alignSelf:'center', display:'flex', gap:2, marginLeft:4}}>
+                        <Box sx={{ alignSelf: 'center', display: 'flex', gap: 2, marginLeft: 4 }}>
                             {/* <Button variant="contained" color="error" sx={{alignSelf: 'center'}}>Demote role</Button>
                             <Button variant="contained" color="primary" sx={{alignSelf: 'center'}}>Elevate role</Button> */}
-                        {foundUser.role !== "Admin" &&
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={selectedRole}
-                                    label="Role"
-                                    onChange={handleRoleSelect}
-                                >
-                                    <SelectItem value={"Customer"}>Customer</SelectItem>
-                                    <SelectItem value={"Employee"}>Employee</SelectItem>
-                                    <SelectItem value={"Admin"}>Admin</SelectItem>
-                                </Select>
-                            </FormControl>
-                        }
+                            {foundUser.role !== "Admin" &&
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={selectedRole}
+                                        label="Role"
+                                        onChange={handleRoleSelect}
+                                    >
+                                        <SelectItem value={"Customer"}>Customer</SelectItem>
+                                        <SelectItem value={"Employee"}>Employee</SelectItem>
+                                        <SelectItem value={"Admin"}>Admin</SelectItem>
+                                    </Select>
+                                </FormControl>
+                            }
 
                         </Box>
-                        
-                        
+
+
                     </Paper>
-               
                     }
-                
+
+
+
 
                 </>
             }

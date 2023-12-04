@@ -11,11 +11,15 @@ import { useContext } from 'react';
 import { MenuItemsContext } from '../../contexts/menuItemsContext';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 
 export default function UpdateMenuItemsTable() {
 
     const { allMenuItems } = useContext(MenuItemsContext);
     console.log({ allMenuItems });
+
+    const [editingItem, setEditingItem] = useState(null);
 
 
     return (
@@ -38,16 +42,34 @@ export default function UpdateMenuItemsTable() {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell>{item.itemNumber}</TableCell>
-                            <TableCell component="th" scope="row">
-                                {item.name}
-                            </TableCell>
-                            <TableCell>{item.price}</TableCell>
-                            <TableCell>{item.description}</TableCell>
+
+                            {editingItem?._id == item._id ?
+                                <>
+                                    <TableCell component="th" scope="row">
+                                        <TextField  value={editingItem.name}></TextField>
+                                    </TableCell>
+                                    <TableCell>  
+                                        <TextField  value={editingItem.price}></TextField>
+                                    </TableCell>
+                                    <TableCell>  
+                                        <TextField value={editingItem.description}></TextField>
+                                    </TableCell>
+                                </> :
+                                <>
+                                    <TableCell component="th" scope="row">
+                                        {item.name}
+                                    </TableCell>
+                                    <TableCell>{item.price}</TableCell>
+                                    <TableCell>{item.description}</TableCell>
+                                </>
+
+                            }
+
                             <TableCell>
                                 <img width="50" src={item.img}></img>
                             </TableCell>
                             <TableCell>
-                                <IconButton aria-label="edit">
+                                <IconButton aria-label="edit" onClick={() => setEditingItem(item)}>
                                     <EditIcon />
                                 </IconButton>
                             </TableCell>

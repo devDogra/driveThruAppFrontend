@@ -21,8 +21,8 @@ import { Routes, Route } from 'react-router-dom'
 import DynamicBreadcrumbs from './components/DynamicBreadcrumbs/DynamicBreadcrumbs'
 import Dashboard from './pages/Dashboard/Dashboard'
 import useFetchApi from '../hooks/useFetchApi'
-import {useState} from 'react'
-
+import {useEffect, useState} from 'react'
+import api from '../config/axios.config'
 
 const hideNavbarOnPages = [
   '/login',
@@ -104,11 +104,22 @@ function App() {
   } = useIsLoggedIn();
 
 
-  const { error, data } = useFetchApi('/menuItems', { allMenuItems: [] });
-  console.log({data}); 
+  // const { error, data } = useFetchApi('/menuItems', { allMenuItems: [] });
+  // console.log({data}); 
+
+ 
 
   const [yourOrder, setYourOrder] = useState([]);
   const [yourOrderTableModalOpen, setYourOrderTableModalOpen] = useState(false);
+  const [allMenuItems, setAllMenuItems] = useState([]);
+
+  useEffect(() => {
+    api.get('/menuItems').then(response => {
+      const items = response.data.allMenuItems;
+      setAllMenuItems(items);
+      console.log({response, getmenu:"yes"});
+    })
+  }, [])
 
   const hideNavBar = false;
   return (
@@ -121,7 +132,9 @@ function App() {
         errorCheckingLogin
       }}>
         <MenuItemsContext.Provider value={{
-          allMenuItems: data?.allMenuItems,
+          // allMenuItems: data?.allMenuItems,
+          allMenuItems,
+          setAllMenuItems,
         }}>
           <YourOrderContext.Provider value={{
             yourOrder,

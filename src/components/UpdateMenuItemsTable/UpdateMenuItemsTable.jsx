@@ -18,7 +18,7 @@ import { useState } from 'react';
 
 export default function UpdateMenuItemsTable() {
 
-    const { allMenuItems } = useContext(MenuItemsContext);
+    const { allMenuItems, setAllMenuItems } = useContext(MenuItemsContext);
     console.log({ allMenuItems });
 
     const [editingItem, setEditingItem] = useState(null);
@@ -47,6 +47,7 @@ export default function UpdateMenuItemsTable() {
 
         api.put(`/menuItems/${editingItem._id}`, edits, config)
             .then(response => {
+                setAllMenuItems(allMenuItems.map(item => item._id == editingItem._id ? editingItem : item))
                 setEditingItem(null);
                 alert("Menu Item Updated");
                 

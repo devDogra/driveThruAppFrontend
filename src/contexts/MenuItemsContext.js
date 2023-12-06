@@ -1,7 +1,9 @@
 import { createContext } from "react";
 
+
 const defaultContext = { 
-    allMenuItems: [] 
+    allMenuItems: [],
+    setAllMenuItems: () => {}
 } 
 
 export const MenuItemsContext = createContext(defaultContext);

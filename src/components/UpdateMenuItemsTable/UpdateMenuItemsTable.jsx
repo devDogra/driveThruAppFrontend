@@ -12,6 +12,8 @@ import { MenuItemsContext } from '../../contexts/menuItemsContext';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import TextField from '@mui/material/TextField';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import checkIfJwtExpired from '../../../utils/checkIfJwtExpired';
 import { useState } from 'react';
 
 export default function UpdateMenuItemsTable() {
@@ -21,6 +23,43 @@ export default function UpdateMenuItemsTable() {
 
     const [editingItem, setEditingItem] = useState(null);
 
+    function handleEditingItemSave(event) {
+
+        const edits = {
+            name: editingItem.name,
+            price: editingItem.price,
+            description: editingItem.description,
+        }
+
+        const accessToken = window.localStorage.getItem('accessToken');
+        if (!accessToken) return alert("Please log in");
+        if (checkIfJwtExpired(accessToken)) {
+            alert("Please log in again");
+            window.location.reload();
+            return;
+        }
+
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${accessToken}`
+            }
+        }
+
+        api.put(`/menuItems/${editingItem._id}`, edits, config)
+            .then(response => {
+                setEditingItem(null);
+                alert("Menu Item Updated");
+                
+            })
+            .catch(({ response }) => {
+                const error = response?.data?.error;
+                let message = response?.data?.message;
+                if (error) console.log(error);
+                if (error == 'jwt expired') message = "Please login again";
+                alert(message || error);
+            })
+        
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -46,13 +85,20 @@ export default function UpdateMenuItemsTable() {
                             {editingItem?._id == item._id ?
                                 <>
                                     <TableCell component="th" scope="row">
-                                        <TextField  value={editingItem.name}></TextField>
+                                        <TextField value={editingItem.name} onChange={(e) => {
+                                            setEditingItem({ ...editingItem, name: e.target.value })
+                                        }}></TextField>
                                     </TableCell>
-                                    <TableCell>  
-                                        <TextField  value={editingItem.price}></TextField>
+
+                                    <TableCell>
+                                        <TextField value={editingItem.price} onChange={e => {
+                                            setEditingItem({ ...editingItem, price: e.target.value })
+                                        }}></TextField>
                                     </TableCell>
-                                    <TableCell>  
-                                        <TextField value={editingItem.description}></TextField>
+                                    <TableCell>
+                                        <TextField value={editingItem.description} onChange={e => {
+                                            setEditingItem({ ...editingItem, description: e.target.value })
+                                        }}></TextField>
                                     </TableCell>
                                 </> :
                                 <>
@@ -69,10 +115,17 @@ export default function UpdateMenuItemsTable() {
                                 <img width="50" src={item.img}></img>
                             </TableCell>
                             <TableCell>
-                                <IconButton aria-label="edit" onClick={() => setEditingItem(item)}>
-                                    <EditIcon />
-                                </IconButton>
+                                {editingItem?._id == item._id ?
+                                    <IconButton aria-label="save" onClick={handleEditingItemSave}>
+                                        <CheckCircleIcon />
+                                    </IconButton> 
+                                    :
+                                    <IconButton aria-label="edit" onClick={() => setEditingItem(item)}>
+                                        <EditIcon />
+                                    </IconButton>
+                                }
                             </TableCell>
+
                         </TableRow>
                     ))}
                 </TableBody>

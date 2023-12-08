@@ -77,6 +77,8 @@ export default function AddMenuItemModal({ addMenuItemModalOpen, setAddMenuItemM
         })
 
         // Post Menu Item Data
+        const img = `${api.defaults.baseURL}/static/menuItems/${data.name}.webp`
+        data.img = img;
         api.post('/menuItems', data, config).then(response => {
             console.log("succress response");
             console.log(response);

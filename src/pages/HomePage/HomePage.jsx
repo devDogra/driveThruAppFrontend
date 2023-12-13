@@ -17,12 +17,21 @@ import ListItemText from '@mui/material/ListItemText'
 import { useContext, useState } from 'react'
 import { MenuItemsContext } from '../../contexts/menuItemsContext'
 import { LoggedInUserContext } from '../../contexts/loggedInUserContext'
+import { YourOrderContext } from '../../contexts/yourOrderContext'
 import { MenuItem } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar'
 import Grid from '@mui/material/Grid'
+import YourOrderTableModal from '../../components/YourOrderTableModal/YourOrderTableModal'
 
 export default function HomePage() {
     const mapURL_GOOGLE = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3497.9984429399815!2d77.1175630203607!3d28.749463447111697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1698052251851!5m2!1sen!2sin"
+
+    const { 
+        yourOrder,
+        setYourOrder, 
+        yourOrderTableModalOpen, 
+        setYourOrderTableModalOpen 
+      } = useContext(YourOrderContext)
 
     const {
         isLoggedIn,
@@ -119,6 +128,8 @@ export default function HomePage() {
             </Box>
 
             <Divider sx={{ borderBottomWidth: 1 }}></Divider>
+
+            <YourOrderTableModal></YourOrderTableModal>
 
             <Snackbar
                 open={pleaseLoginSnackbarOpen}

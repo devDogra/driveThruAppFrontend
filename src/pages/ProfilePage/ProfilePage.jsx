@@ -14,6 +14,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Paper from '@mui/material/Paper'
 import YourOrderTable from "../../components/YourOrderTable/YourOrderTable";
 import PreviousOrdersTable from "../../components/PreviousOrdersTable/PreviousOrdersTable";
+import { Link as ReactRouterLink } from 'react-router-dom';
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ProfilePage() {
@@ -100,7 +101,9 @@ export default function ProfilePage() {
 
 
           </Paper>
-          <Button variant="contained" size="large" endIcon={<ArrowRightAltIcon />} sx={{ my: 4, width: "100%"}}>Go to Menu </Button>
+          <Button variant="contained" size="large" component={ReactRouterLink} endIcon={<ArrowRightAltIcon />} sx={{ my: 4, width: "100%"}}  to="/menu">Go to Menu </Button>
+
+         
       
           <Button variant="contained" color="error" size="large" endIcon={<ArrowRightAltIcon />} sx={{ mb: 4, width: "100%"}} onClick={logoutUser}>Logout </Button>
 

@@ -92,9 +92,27 @@ export default function LoginModal({ loginModalOpen, handleClose, setLoginModalO
         setErrorFromAPI(null);
         setShowSuccessMsg(false);
     }
-    function handleRegister() {
-        console.log("handleRegister");
+
+    function handleRegister({firstName, lastName, email, phone, password, role}) {
+        const data = {firstName, lastName, email, phone, password, role}
+
+        api.post(`/register`, data).then(response => {
+            console.log(response);
+            const data = response.data;
+            console.log(data);
+            console.log("Successful registration");
+            alert("Account created successfully");
+        }).catch((error) => {
+            if (error.name == 'AxiosError') {
+                const errorMsg = error?.response?.data?.error || error.message;
+                setErrorFromAPI(errorMsg);
+            } else {
+                console.log({ error });
+                window.alert("An error occurred. Please reload.");
+            }
+        })
     }
+
     function handleFormSubmit(e) {
         e.preventDefault();
         const formData = new FormData(e.target);

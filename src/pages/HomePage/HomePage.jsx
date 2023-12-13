@@ -21,6 +21,7 @@ import { YourOrderContext } from '../../contexts/yourOrderContext'
 import { MenuItem } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar'
 import Grid from '@mui/material/Grid'
+import { Link as ReactRouterLink } from 'react-router-dom';
 import YourOrderTableModal from '../../components/YourOrderTableModal/YourOrderTableModal'
 
 export default function HomePage() {
@@ -87,7 +88,8 @@ export default function HomePage() {
                     }
                 </Stack>
 
-                <Button variant="contained" size="large" endIcon={<ArrowRightAltIcon />}>Go to Menu </Button>
+                <Button component={ReactRouterLink} variant="contained" to="/menu" size="large" endIcon={<ArrowRightAltIcon />}>Go to Menu </Button>
+
             </Box>
 
             <Divider sx={{ borderBottomWidth: 1 }}></Divider>

@@ -29,11 +29,11 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 const pages = [
   { name: 'Home', route: '/', hideFrom: [] },
   { name: 'Menu', route: '/menu', hideFrom: [] },
-  { name: 'About Us', route: '/about', hideFrom: [] },
-  { name: 'Contact Us', route: '/contact', hideFrom: [] },
+  // { name: 'About Us', route: '/about', hideFrom: [] },
+  // { name: 'Contact Us', route: '/contact', hideFrom: [] },
   { name: 'Login', route: null, hideFrom: [roles.Customer, roles.Employee, roles.Manager, roles.Admin] },
-  { name: 'Profile', route: '/profile', hideFrom: [roles.Anonymous]}, 
-  { name: 'Dashboard', route: '/dashboard', hideFrom: [roles.Anonymous, roles.Customer]}, 
+  { name: 'Profile', route: '/profile', hideFrom: [roles.Anonymous] },
+  { name: 'Dashboard', route: '/dashboard', hideFrom: [roles.Anonymous, roles.Customer] },
 ]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -114,11 +114,28 @@ function Navbar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {/* {pages.map((page) => (
                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
+              {pages.map((page) => {
+                // console.log(loggedInUser?.role);
+                // console.log(page.hideFrom); 
+                if (page.hideFrom.includes(loggedInUser?.role)) return null;
+
+                const buttonOnClick = (page.name == 'Login') ? handleOpen : handleCloseNavMenu;
+                const marginLeft = ['Login', 'Profile'].includes(page.name) ? 'auto' : null;
+                return (
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    <Button component={page.route && ReactRouterLink} to={page.route} key={page.name} onClick={buttonOnClick} sx={{ my: 2, color: 'black', display: 'block', marginLeft }}>
+                      {page.name}
+                    </Button>
+                  </MenuItem>
+
+                )
+
+              })}
             </Menu>
           </Box>
           <LunchDiningIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -133,7 +150,7 @@ function Navbar() {
               if (page.hideFrom.includes(loggedInUser?.role)) return null;
 
               const buttonOnClick = (page.name == 'Login') ? handleOpen : handleCloseNavMenu;
-              const marginLeft = ['Login', 'Profile'].includes(page.name) ? 'auto' : null;  
+              const marginLeft = ['Login', 'Profile'].includes(page.name) ? 'auto' : null;
               return (
                 <Button component={page.route && ReactRouterLink} to={page.route} key={page.name} onClick={buttonOnClick} sx={{ my: 2, color: 'white', display: 'block', marginLeft }}>
                   {page.name}

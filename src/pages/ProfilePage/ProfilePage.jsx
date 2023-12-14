@@ -58,13 +58,13 @@ export default function ProfilePage() {
 
   return (
     <>
-      <Typography>
+      {/* <Typography>
         {
           JSON.stringify({
             isLoggedIn, loggedInUser
           })
         }
-      </Typography>
+      </Typography> */}
 
       {/* <Breadcrumbs aria-label="breadcrumb" sx={{ my: 4 }}>
         <Link underline="hover" color="inherit" href="/">

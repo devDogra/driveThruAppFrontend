@@ -126,9 +126,9 @@ export default function Dashboard() {
 
     return (
         <>
-            <Typography>
+            {/* <Typography>
                 {JSON.stringify(loggedInUser)}
-            </Typography>
+            </Typography> */}
 
             <Typography variant='h3' textTransform='uppercase' fontWeight='bold' mb={4}>Active Orders</Typography>
 

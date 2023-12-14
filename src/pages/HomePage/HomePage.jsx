@@ -104,8 +104,11 @@ export default function HomePage() {
                             BurgerXYZ
                         </Typography>
 
-                        <Typography my={2}>
-                            We sell burgers. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem est debitis praesentium mollitia voluptatibus veniam, eius architecto omnis autem ea?
+                        <Typography variant="h4" my={2}>
+                            We make the best burgers in Delhi. 
+                        </Typography>
+                        <Typography variant="h5" sx={{textDecoration:'underline'}} my={2}>
+                            Not convinced? Come check us out.
                         </Typography>
 
                         <List>

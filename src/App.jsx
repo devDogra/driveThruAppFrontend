@@ -23,6 +23,9 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import useFetchApi from '../hooks/useFetchApi'
 import {useEffect, useState} from 'react'
 import api from '../config/axios.config'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { purple } from '@mui/material/colors';
 
 const hideNavbarOnPages = [
   '/login',
@@ -93,6 +96,14 @@ const initialOrder = [
   }
 ]
 
+
+
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
+
 function App() {
 
   const {
@@ -147,7 +158,10 @@ function App() {
               <Navbar></Navbar>
             )}
 
-            <Container sx={{ py: 10 }}>
+<ThemeProvider theme={theme}>
+      <CssBaseline />
+
+            <Container sx={{ py: 10, }}>
               {/* <MenuPage /> */}
               {hideNavBar || <DynamicBreadcrumbs />}
 
@@ -161,6 +175,7 @@ function App() {
               {/* <HomePage /> */}
               {/* <ProfilePage/> */}
             </Container>
+            </ThemeProvider>
 
           </YourOrderContext.Provider>
         </MenuItemsContext.Provider>
